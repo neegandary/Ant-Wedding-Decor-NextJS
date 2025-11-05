@@ -271,7 +271,7 @@ export default function NewPortfolio() {
                   value={formData.thumbnailImage}
                   onChange={(e) => setFormData({ ...formData, thumbnailImage: e.target.value })}
                   required={true}
-                  helperText="Ảnh hiển thị trong danh sách portfolio (tối đa 5MB)"
+                  helperText="Ảnh hiển thị trong danh sách portfolio"
                 />
 
                 <ImageUploader
@@ -279,7 +279,7 @@ export default function NewPortfolio() {
                   value={formData.headerImage}
                   onChange={(e) => setFormData({ ...formData, headerImage: e.target.value })}
                   required={true}
-                  helperText="Ảnh header trang chi tiết (tối đa 5MB)"
+                  helperText="Ảnh header trang chi tiết"
                 />
               </div>
             </div>
