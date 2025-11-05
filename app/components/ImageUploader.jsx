@@ -17,6 +17,10 @@ export default function ImageUploader({ label, value, onChange, required = false
         const img = new Image();
         
         img.onload = () => {
+          // Log kích thước ảnh gốc
+          const originalSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+          console.log(`📸 Ảnh gốc: ${img.width}x${img.height}, ${originalSizeMB}MB`);
+          
           // Tính toán kích thước mới
           let width = img.width;
           let height = img.height;
@@ -25,6 +29,7 @@ export default function ImageUploader({ label, value, onChange, required = false
           if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
             width = maxWidth;
+            console.log(`🔄 Resize xuống: ${width}x${height}`);
           }
           
           // Tạo canvas để xử lý ảnh
@@ -35,46 +40,37 @@ export default function ImageUploader({ label, value, onChange, required = false
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          // Chuyển đổi sang WebP với quality
-          canvas.toBlob(
-            (blob) => {
-              if (!blob) {
-                reject(new Error('Không thể xử lý ảnh'));
-                return;
-              }
-              
-              // Kiểm tra kích thước sau khi xử lý
-              const sizeMB = blob.size / (1024 * 1024);
-              
-              if (sizeMB > maxSizeMB) {
-                // Nếu vẫn còn lớn, giảm quality
-                const newQuality = quality * (maxSizeMB / sizeMB) * 0.9;
+          // Hàm thử nén với quality khác nhau
+          const tryCompress = (targetQuality, attempt = 1) => {
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  reject(new Error('Không thể xử lý ảnh'));
+                  return;
+                }
                 
-                canvas.toBlob(
-                  (newBlob) => {
-                    if (!newBlob) {
-                      reject(new Error('Không thể xử lý ảnh'));
-                      return;
-                    }
-                    
-                    // Tạo File object mới với tên .webp
-                    const fileName = file.name.replace(/\.[^/.]+$/, '.webp');
-                    const webpFile = new File([newBlob], fileName, { type: 'image/webp' });
-                    resolve(webpFile);
-                  },
-                  'image/webp',
-                  Math.max(0.5, newQuality)
-                );
-              } else {
-                // Tạo File object mới với tên .webp
-                const fileName = file.name.replace(/\.[^/.]+$/, '.webp');
-                const webpFile = new File([blob], fileName, { type: 'image/webp' });
-                resolve(webpFile);
-              }
-            },
-            'image/webp',
-            quality
-          );
+                const sizeMB = blob.size / (1024 * 1024);
+                console.log(`🔧 Lần thử ${attempt}: quality=${targetQuality.toFixed(2)}, size=${sizeMB.toFixed(2)}MB`);
+                
+                if (sizeMB > maxSizeMB && targetQuality > 0.3) {
+                  // Nếu vẫn còn lớn và quality còn cao, thử giảm thêm
+                  const newQuality = Math.max(0.3, targetQuality * (maxSizeMB / sizeMB) * 0.85);
+                  tryCompress(newQuality, attempt + 1);
+                } else {
+                  // Đạt yêu cầu hoặc đã giảm tối đa
+                  const fileName = file.name.replace(/\.[^/.]+$/, '.webp');
+                  const webpFile = new File([blob], fileName, { type: 'image/webp' });
+                  console.log(`✅ Hoàn tất: ${fileName}, ${sizeMB.toFixed(2)}MB`);
+                  resolve(webpFile);
+                }
+              },
+              'image/webp',
+              targetQuality
+            );
+          };
+          
+          // Bắt đầu với quality ban đầu
+          tryCompress(quality);
         };
         
         img.onerror = () => {
@@ -106,11 +102,10 @@ export default function ImageUploader({ label, value, onChange, required = false
     setProcessing(true);
 
     try {
+      console.log(`🚀 Bắt đầu xử lý: ${file.name}`);
+      
       // Xử lý ảnh: resize và chuyển sang WebP
       const processedFile = await processImage(file);
-      
-      const sizeMB = (processedFile.size / (1024 * 1024)).toFixed(2);
-      console.log(`✅ Đã xử lý ảnh: ${file.name} → ${processedFile.name} (${sizeMB}MB)`);
       
       setProcessing(false);
       setUploading(true);
