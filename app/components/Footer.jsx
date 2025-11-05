@@ -3,9 +3,19 @@
 import { IMAGES } from "../constants/image";
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export const Footer = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return null;
+    }
 
     return (
         <motion.footer
