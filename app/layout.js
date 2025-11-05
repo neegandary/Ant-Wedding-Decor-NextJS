@@ -14,6 +14,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="vi">
+      <head>
+        <link rel="preconnect" href="https://pub-4c5c0327c6a04522b8c7d0f0b2b6c3e8.r2.dev" />
+        <link rel="dns-prefetch" href="https://pub-4c5c0327c6a04522b8c7d0f0b2b6c3e8.r2.dev" />
+      </head>
       <body className="antialiased">
         <I18nProvider>
           <Header />

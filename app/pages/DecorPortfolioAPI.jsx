@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const DecorPortfolioAPI = () => {
   const { t } = useTranslation();
@@ -106,15 +107,17 @@ const DecorPortfolioAPI = () => {
               {/* Card Container */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                 {/* Image Section */}
-                <div className="relative overflow-hidden">
-                  <img
+                <div className="relative overflow-hidden h-80">
+                  <Image
                     src={item.thumbnailImage}
                     alt={item.title}
-                    loading="lazy"
-                    className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    priority={index < 3}
                   />
                   {/* Date Badge */}
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded text-center">
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded text-center z-10">
                     <div className="text-3xl font-bold text-gray-800">{item.date.day}</div>
                     <div className="text-xs text-gray-600 uppercase">{item.date.month}</div>
                   </div>
