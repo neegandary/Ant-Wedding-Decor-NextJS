@@ -40,20 +40,91 @@ export default function EditPortfolio() {
     }
   };
 
+  // Hàm resize và chuyển đổi ảnh sang WebP
+  const processImage = async (file, maxSizeMB = 5, quality = 0.85, maxWidth = 1920) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        const img = new Image();
+        
+        img.onload = () => {
+          const originalSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+          console.log(`📸 Ảnh gốc: ${img.width}x${img.height}, ${originalSizeMB}MB`);
+          
+          let width = img.width;
+          let height = img.height;
+          
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+            console.log(`🔄 Resize xuống: ${width}x${height}`);
+          }
+          
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          
+          const tryCompress = (targetQuality, attempt = 1) => {
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  reject(new Error('Không thể xử lý ảnh'));
+                  return;
+                }
+                
+                const sizeMB = blob.size / (1024 * 1024);
+                console.log(`🔧 Lần thử ${attempt}: quality=${targetQuality.toFixed(2)}, size=${sizeMB.toFixed(2)}MB`);
+                
+                if (sizeMB > maxSizeMB && targetQuality > 0.3) {
+                  const newQuality = Math.max(0.3, targetQuality * (maxSizeMB / sizeMB) * 0.85);
+                  tryCompress(newQuality, attempt + 1);
+                } else {
+                  const fileName = file.name.replace(/\.[^/.]+$/, '.webp');
+                  const webpFile = new File([blob], fileName, { type: 'image/webp' });
+                  console.log(`✅ Hoàn tất: ${fileName}, ${sizeMB.toFixed(2)}MB`);
+                  resolve(webpFile);
+                }
+              },
+              'image/webp',
+              targetQuality
+            );
+          };
+          
+          tryCompress(quality);
+        };
+        
+        img.onerror = () => reject(new Error('Không thể đọc ảnh'));
+        img.src = e.target.result;
+      };
+      
+      reader.onerror = () => reject(new Error('Không thể đọc file'));
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleImageUpload = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('portfolioId', portfolioId);
-      formData.append('folder', `portfolios/${formData.slug || 'temp'}`);
+      console.log(`🚀 Bắt đầu xử lý: ${file.name}`);
+      
+      // Xử lý ảnh trước khi upload
+      const processedFile = await processImage(file);
+      
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', processedFile);
+      uploadFormData.append('portfolioId', portfolioId);
+      uploadFormData.append('folder', `portfolios/${formData.slug || 'temp'}`);
 
       const res = await fetch('/api/admin/upload', {
         method: 'POST',
-        body: formData,
+        body: uploadFormData,
       });
 
       const data = await res.json();
@@ -64,6 +135,7 @@ export default function EditPortfolio() {
         } else if (type === 'header') {
           setFormData(prev => ({ ...prev, headerImage: data.url }));
         }
+        setToast({ message: 'Upload ảnh thành công!', type: 'success' });
       } else {
         setToast({ message: 'Upload thất bại: ' + data.error, type: 'error' });
       }
@@ -81,14 +153,19 @@ export default function EditPortfolio() {
     setUploading(true);
     try {
       const uploadPromises = files.map(async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('portfolioId', portfolioId);
-        formData.append('folder', `portfolios/${formData.slug || 'temp'}`);
+        console.log(`🚀 Bắt đầu xử lý gallery: ${file.name}`);
+        
+        // Xử lý ảnh trước khi upload
+        const processedFile = await processImage(file);
+        
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', processedFile);
+        uploadFormData.append('portfolioId', portfolioId);
+        uploadFormData.append('folder', `portfolios/${formData.slug || 'temp'}`);
 
         const res = await fetch('/api/admin/upload', {
           method: 'POST',
-          body: formData,
+          body: uploadFormData,
         });
 
         const data = await res.json();
