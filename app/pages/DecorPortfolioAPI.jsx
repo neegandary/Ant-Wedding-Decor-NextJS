@@ -8,38 +8,32 @@ import { useState, useEffect } from 'react';
 const DecorPortfolioAPI = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const [allPortfolios, setAllPortfolios] = useState([]);
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    total: 0,
+    totalPages: 0,
+    hasMore: false
+  });
   const itemsPerPage = 12;
 
   useEffect(() => {
-    fetchAllPortfolios();
-  }, []);
+    fetchPortfolios(currentPage);
+  }, [currentPage]);
 
-  useEffect(() => {
-    if (allPortfolios.length > 0) {
-      paginatePortfolios(currentPage);
-    }
-  }, [currentPage, allPortfolios]);
-
-  const fetchAllPortfolios = async () => {
+  const fetchPortfolios = async (page) => {
+    setLoading(true);
     try {
-      const res = await fetch('/api/portfolios?limit=100');
+      const res = await fetch(`/api/portfolios?page=${page}&limit=${itemsPerPage}`);
       const data = await res.json();
-      setAllPortfolios(data.portfolios || []);
+      setPortfolios(data.portfolios || []);
+      setPagination(data.pagination || {});
     } catch (error) {
       console.error('Error fetching portfolios:', error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const paginatePortfolios = (page) => {
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    setPortfolios(allPortfolios.slice(startIndex, endIndex));
   };
 
   const handlePageChange = (page) => {
@@ -53,8 +47,29 @@ const DecorPortfolioAPI = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
+      <div className="bg-white min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          {/* Skeleton Header */}
+          <div className="mb-12 animate-pulse">
+            <div className="h-12 bg-gray-200 rounded w-2/3 mb-4"></div>
+            <div className="w-12 h-1 bg-gray-200"></div>
+          </div>
+
+          {/* Skeleton Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="bg-gray-200 rounded-lg h-80 mb-4"></div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                  <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-full"></div>
+                  <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
@@ -95,6 +110,7 @@ const DecorPortfolioAPI = () => {
                   <img
                     src={item.thumbnailImage}
                     alt={item.title}
+                    loading="lazy"
                     className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Date Badge */}
@@ -167,8 +183,8 @@ const DecorPortfolioAPI = () => {
         )}
 
         {/* Pagination */}
-        {allPortfolios.length > itemsPerPage && (() => {
-          const totalPages = Math.ceil(allPortfolios.length / itemsPerPage);
+        {pagination.totalPages > 1 && (() => {
+          const totalPages = pagination.totalPages;
 
           return (
             <div className="flex justify-center items-center gap-2 mt-12">
