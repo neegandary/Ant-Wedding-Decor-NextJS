@@ -1,5 +1,5 @@
-import DecorPortfolio from "../pages/DecorPortfolio";
+import DecorPortfolioAPI from "../pages/DecorPortfolioAPI";
 
 export default function PortfolioPage() {
-  return <DecorPortfolio />;
+  return <DecorPortfolioAPI />;
 }

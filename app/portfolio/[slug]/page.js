@@ -1,6 +1,6 @@
-import PortfolioDetail from "../../pages/PortfolioDetail";
+import PortfolioDetailAPI from "../../pages/PortfolioDetailAPI";
 
 export default async function PortfolioDetailPage({ params }) {
   const resolvedParams = await params;
-  return <PortfolioDetail params={resolvedParams} />;
+  return <PortfolioDetailAPI params={resolvedParams} />;
 }

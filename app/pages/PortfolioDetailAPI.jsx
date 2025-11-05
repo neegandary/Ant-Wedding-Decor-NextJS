@@ -5,31 +5,38 @@ import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Grid3x3, X, ZoomIn, Maximize2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { PORTFOLIO_DETAIL_DATA, PORTFOLIO_LIST } from '../data';
 
-const PortfolioDetail = ({ params }) => {
+const PortfolioDetailAPI = ({ params }) => {
   const { t } = useTranslation();
-  const endpoint = params?.slug;
+  const slug = params?.slug;
   const router = useRouter();
+  const [portfolio, setPortfolio] = useState(null);
+  const [allPortfolios, setAllPortfolios] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Scroll to top when endpoint changes
+  useEffect(() => {
+    if (slug) {
+      fetchPortfolio();
+      fetchAllPortfolios();
+    }
+  }, [slug]);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [endpoint]);
+  }, [slug]);
 
   // JavaScript sticky implementation with bottom boundary
   useEffect(() => {
     const stickyEl = document.querySelector('[data-sticky-sidebar]');
     if (!stickyEl) return;
 
-    // Create placeholder to maintain layout
     const placeholder = document.createElement('div');
     placeholder.style.display = 'none';
     stickyEl.parentElement.insertBefore(placeholder, stickyEl);
 
-    const container = stickyEl.parentElement; // Grid container
+    const container = stickyEl.parentElement;
     const stickyOffset = 100;
     const sidebarWidth = stickyEl.offsetWidth;
 
@@ -37,18 +44,14 @@ const PortfolioDetail = ({ params }) => {
       const scrollY = window.scrollY;
       const sidebarHeight = stickyEl.offsetHeight;
       
-      // Calculate boundaries
       const containerRect = container.getBoundingClientRect();
       const containerTop = containerRect.top + scrollY;
       const containerBottom = containerTop + container.offsetHeight;
       
-      // Start sticking point
       const startSticky = containerTop - stickyOffset;
-      // Stop sticking point (when sidebar bottom reaches container bottom)
       const stopSticky = containerBottom - sidebarHeight - stickyOffset;
       
       if (scrollY >= startSticky && scrollY < stopSticky) {
-        // Stick it (fixed position)
         placeholder.style.display = 'block';
         placeholder.style.height = `${sidebarHeight}px`;
         stickyEl.style.position = 'fixed';
@@ -56,7 +59,6 @@ const PortfolioDetail = ({ params }) => {
         stickyEl.style.width = `${sidebarWidth}px`;
         stickyEl.style.zIndex = '10';
       } else if (scrollY >= stopSticky) {
-        // Stop at bottom (absolute position)
         placeholder.style.display = 'block';
         placeholder.style.height = `${sidebarHeight}px`;
         stickyEl.style.position = 'absolute';
@@ -64,7 +66,6 @@ const PortfolioDetail = ({ params }) => {
         stickyEl.style.width = `${sidebarWidth}px`;
         stickyEl.style.zIndex = '10';
       } else {
-        // Normal position (static)
         placeholder.style.display = 'none';
         stickyEl.style.position = 'static';
         stickyEl.style.width = 'auto';
@@ -81,13 +82,29 @@ const PortfolioDetail = ({ params }) => {
       window.removeEventListener('resize', handleScroll);
       placeholder.remove();
     };
-  }, []);
+  }, [portfolio]);
 
-  const currentIndex = PORTFOLIO_LIST.indexOf(endpoint);
-  const prevEndpoint = currentIndex > 0 ? PORTFOLIO_LIST[currentIndex - 1] : null;
-  const nextEndpoint = currentIndex < PORTFOLIO_LIST.length - 1 ? PORTFOLIO_LIST[currentIndex + 1] : null;
+  const fetchPortfolio = async () => {
+    try {
+      const res = await fetch(`/api/portfolios/${slug}`);
+      const data = await res.json();
+      setPortfolio(data.portfolio);
+    } catch (error) {
+      console.error('Error fetching portfolio:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const portfolio = PORTFOLIO_DETAIL_DATA[endpoint] || PORTFOLIO_DETAIL_DATA.nathanxtracy;
+  const fetchAllPortfolios = async () => {
+    try {
+      const res = await fetch('/api/portfolios');
+      const data = await res.json();
+      setAllPortfolios(data.portfolios || []);
+    } catch (error) {
+      console.error('Error fetching portfolios:', error);
+    }
+  };
 
   const openLightbox = (index) => {
     setCurrentImageIndex(index);
@@ -106,9 +123,29 @@ const PortfolioDetail = ({ params }) => {
     setCurrentImageIndex((prev) => (prev < portfolio.images.length - 1 ? prev + 1 : 0));
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!portfolio) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Portfolio not found</div>
+      </div>
+    );
+  }
+
+  const currentIndex = allPortfolios.findIndex(p => p.slug === slug);
+  const prevPortfolio = currentIndex > 0 ? allPortfolios[currentIndex - 1] : null;
+  const nextPortfolio = currentIndex < allPortfolios.length - 1 ? allPortfolios[currentIndex + 1] : null;
+
   return (
     <div className="bg-gray-50 min-h-screen">
-      {/* Hero Header with Background Image */}
+      {/* Hero Header */}
       <div
         className="relative h-[400px] bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: `url(${portfolio.headerImage})` }}
@@ -127,64 +164,61 @@ const PortfolioDetail = ({ params }) => {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative">
-          {/* Left Column - Description & Info (Sticky via JS) */}
+          {/* Left Column - Info (Sticky via JS) */}
           <aside 
             data-sticky-sidebar
             className="lg:col-span-1 bg-white rounded-lg shadow-md p-8"
           >
-            {/* Title */}
             <h2 className="text-3xl font-bold text-gray-800 mb-2">{portfolio.title}</h2>
-                <p className="text-sm text-gray-500 mb-6">{portfolio.subtitle}</p>
+            <p className="text-sm text-gray-500 mb-6">{portfolio.subtitle}</p>
 
-                {/* Description */}
-                <div className="text-gray-700 text-sm leading-relaxed mb-8 whitespace-pre-line">
-                  {portfolio.description}
-                </div>
+            <div className="text-gray-700 text-sm leading-relaxed mb-8 whitespace-pre-line">
+              {portfolio.description}
+            </div>
 
-                {/* Details */}
-                <div className="border-t border-gray-200 pt-6 mb-6">
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">{t('concept')}</span> {portfolio.details.concept}
-                  </p>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">{t('weddingAddress')}</span> {portfolio.details.address}
-                  </p>
-                  <p className="text-sm">
-                    <span className="font-semibold">{t('photographer')}</span> {portfolio.details.photographer}
-                  </p>
-                </div>
+            <div className="border-t border-gray-200 pt-6 mb-6">
+              <p className="text-sm mb-2">
+                <span className="font-semibold">{t('concept')}</span> {portfolio.details?.concept}
+              </p>
+              <p className="text-sm mb-2">
+                <span className="font-semibold">{t('weddingAddress')}</span> {portfolio.details?.address}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">{t('photographer')}</span> {portfolio.details?.photographer}
+              </p>
+            </div>
 
-                {/* Contact Info */}
-                <div className="border-t border-gray-200 pt-6 mb-6">
-                  <h3 className="font-bold text-gray-800 mb-3">ANT WEDDING - DECOR & MORE</h3>
-                  <p className="text-sm mb-2">
-                    <span className="font-semibold">Hotline:</span> {portfolio.contact.hotline}
-                  </p>
-                  <p className="text-sm">
-                    <span className="font-semibold">Email:</span> {portfolio.contact.email}
-                  </p>
-                </div>
+            <div className="border-t border-gray-200 pt-6 mb-6">
+              <h3 className="font-bold text-gray-800 mb-3">ANT WEDDING - DECOR & MORE</h3>
+              <p className="text-sm mb-2">
+                <span className="font-semibold">Hotline:</span> {portfolio.contact?.hotline}
+              </p>
+              <p className="text-sm">
+                <span className="font-semibold">Email:</span> {portfolio.contact?.email}
+              </p>
+            </div>
 
-                {/* Tags */}
-                <div className="border-t border-gray-200 pt-6">
-                  <h4 className="font-semibold text-gray-800 mb-3">{t('tags')}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {portfolio.tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full hover:bg-orange-100 hover:text-orange-600 transition-colors cursor-pointer"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+            {portfolio.tags && portfolio.tags.length > 0 && (
+              <div className="border-t border-gray-200 pt-6">
+                <h4 className="font-semibold text-gray-800 mb-3">{t('tags')}</h4>
+                <div className="flex flex-wrap gap-2">
+                  {portfolio.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full hover:bg-orange-100 hover:text-orange-600 transition-colors cursor-pointer"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
+              </div>
+            )}
           </aside>
 
-          {/* Right Column - Masonry Gallery Layout (Scrollable) */}
+          {/* Right Column - Gallery */}
           <div className="lg:col-span-2">
             <div className="columns-1 md:columns-2 gap-4">
-              {portfolio.images.map((image, index) => (
+              {portfolio.images?.map((image, index) => (
                 <div
                   key={index}
                   onClick={() => openLightbox(index)}
@@ -206,14 +240,13 @@ const PortfolioDetail = ({ params }) => {
           </div>
         </div>
 
-        {/* Navigation Footer */}
+        {/* Navigation */}
         <div className="mt-16 border-t border-gray-300 pt-8">
           <div className="flex items-center justify-between">
-            {/* Previous Button */}
             <button
-              onClick={() => prevEndpoint && router.push(`/portfolio/${prevEndpoint}`)}
-              disabled={!prevEndpoint}
-              className={`flex items-center gap-3 group ${prevEndpoint
+              onClick={() => prevPortfolio && router.push(`/portfolio/${prevPortfolio.slug}`)}
+              disabled={!prevPortfolio}
+              className={`flex items-center gap-3 group ${prevPortfolio
                 ? 'text-gray-700 hover:text-orange-400 cursor-pointer'
                 : 'text-gray-300 cursor-not-allowed'
                 } transition-colors`}
@@ -222,24 +255,22 @@ const PortfolioDetail = ({ params }) => {
               <div className="text-left">
                 <div className="text-xs text-gray-400 uppercase">{t('newer')}</div>
                 <div className="text-sm font-medium">
-                  {prevEndpoint ? PORTFOLIO_DETAIL_DATA[prevEndpoint]?.title || 'Previous Portfolio' : t('noPrevious')}
+                  {prevPortfolio?.title || t('noPrevious')}
                 </div>
               </div>
             </button>
 
-            {/* Back to Grid Button */}
             <button
               onClick={() => router.push('/portfolio')}
-              className="flex items-center justify-center w-12 h-12 rounded-full border-2 border-gray-300 hover:border-orange-400 hover:text-orange-400 transition-colors group"
+              className="flex items-center justify-center w-12 h-12 rounded-full border-2 border-gray-300 hover:border-orange-400 hover:text-orange-400 transition-colors"
             >
               <Grid3x3 className="w-5 h-5" />
             </button>
 
-            {/* Next Button */}
             <button
-              onClick={() => nextEndpoint && router.push(`/portfolio/${nextEndpoint}`)}
-              disabled={!nextEndpoint}
-              className={`flex items-center gap-3 group ${nextEndpoint
+              onClick={() => nextPortfolio && router.push(`/portfolio/${nextPortfolio.slug}`)}
+              disabled={!nextPortfolio}
+              className={`flex items-center gap-3 group ${nextPortfolio
                 ? 'text-gray-700 hover:text-orange-400 cursor-pointer'
                 : 'text-gray-300 cursor-not-allowed'
                 } transition-colors`}
@@ -247,7 +278,7 @@ const PortfolioDetail = ({ params }) => {
               <div className="text-right">
                 <div className="text-xs text-gray-400 uppercase">{t('older')}</div>
                 <div className="text-sm font-medium">
-                  {nextEndpoint ? PORTFOLIO_DETAIL_DATA[nextEndpoint]?.title || 'Next Portfolio' : t('noNext')}
+                  {nextPortfolio?.title || t('noNext')}
                 </div>
               </div>
               <ChevronRight className="w-6 h-6" />
@@ -262,32 +293,9 @@ const PortfolioDetail = ({ params }) => {
           {/* Top Bar */}
           <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent z-10">
             <div className="text-white text-sm">
-              {currentImageIndex + 1} / {portfolio.images.length}
+              {currentImageIndex + 1} / {portfolio.images?.length || 0}
             </div>
             <div className="flex items-center gap-4">
-              <button
-                onClick={closeLightbox}
-                className="text-white hover:text-gray-300 transition-colors"
-                title="Zoom In"
-              >
-                <ZoomIn className="w-6 h-6" />
-              </button>
-              <button
-                onClick={closeLightbox}
-                className="text-white hover:text-gray-300 transition-colors"
-                title="Fullscreen"
-              >
-                <Maximize2 className="w-6 h-6" />
-              </button>
-              <button
-                onClick={closeLightbox}
-                className="text-white hover:text-gray-300 transition-colors"
-                title="Share"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                </svg>
-              </button>
               <button
                 onClick={closeLightbox}
                 className="text-white hover:text-gray-300 transition-colors"
@@ -309,7 +317,7 @@ const PortfolioDetail = ({ params }) => {
           {/* Image */}
           <div className="relative max-w-7xl max-h-[90vh] mx-auto px-16">
             <img
-              src={portfolio.images[currentImageIndex].src}
+              src={portfolio.images[currentImageIndex]?.src}
               alt={`${portfolio.title} - ${currentImageIndex + 1}`}
               className="max-w-full max-h-[90vh] object-contain"
             />
@@ -328,4 +336,4 @@ const PortfolioDetail = ({ params }) => {
   );
 };
 
-export default PortfolioDetail;
+export default PortfolioDetailAPI;

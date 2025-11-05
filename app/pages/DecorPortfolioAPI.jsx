@@ -3,22 +3,61 @@
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { PORTFOLIO_ITEMS_RAW, monthToNumber } from '../data/portfolioData';
+import { useState, useEffect } from 'react';
 
-const DecorPortfolio = () => {
+const DecorPortfolioAPI = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const [allPortfolios, setAllPortfolios] = useState([]);
+  const [portfolios, setPortfolios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
-  const handleCardClick = (endpoint) => {
-    router.push(`/portfolio/${endpoint}`);
+  useEffect(() => {
+    fetchAllPortfolios();
+  }, []);
+
+  useEffect(() => {
+    if (allPortfolios.length > 0) {
+      paginatePortfolios(currentPage);
+    }
+  }, [currentPage, allPortfolios]);
+
+  const fetchAllPortfolios = async () => {
+    try {
+      const res = await fetch('/api/portfolios?limit=100');
+      const data = await res.json();
+      setAllPortfolios(data.portfolios || []);
+    } catch (error) {
+      console.error('Error fetching portfolios:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Sắp xếp theo thứ tự ngày tháng từ gần nhất đến xa nhất
-  const portfolioItems = [...PORTFOLIO_ITEMS_RAW].sort((a, b) => {
-    const dateA = new Date(a.date.year, monthToNumber(a.date.month) - 1, parseInt(a.date.day));
-    const dateB = new Date(b.date.year, monthToNumber(b.date.month) - 1, parseInt(b.date.day));
-    return dateB - dateA; // Sắp xếp giảm dần (mới nhất trước)
-  });
+  const paginatePortfolios = (page) => {
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setPortfolios(allPortfolios.slice(startIndex, endIndex));
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCardClick = (slug) => {
+    router.push(`/portfolio/${slug}`);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -39,22 +78,22 @@ const DecorPortfolio = () => {
 
         {/* Portfolio Grid - 3 columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioItems.map((item, index) => (
+          {portfolios.map((item, index) => (
             <motion.div
-              key={item.id}
+              key={item._id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.3, delay: index * 0.03 }}
               className="group cursor-pointer"
-              onClick={() => handleCardClick(item.endpoint)}
+              onClick={() => handleCardClick(item.slug)}
             >
               {/* Card Container */}
               <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                 {/* Image Section */}
                 <div className="relative overflow-hidden">
                   <img
-                    src={item.image}
+                    src={item.thumbnailImage}
                     alt={item.title}
                     className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -69,7 +108,7 @@ const DecorPortfolio = () => {
                 <div className="p-6">
                   {/* Category Badge */}
                   <div className="inline-block bg-teal-700 text-white text-xs px-3 py-1 rounded mb-3 uppercase">
-                    {t(item.categoryKey)}
+                    {t(item.category) || item.category}
                   </div>
 
                   {/* Title */}
@@ -77,10 +116,10 @@ const DecorPortfolio = () => {
                     {item.title}
                   </h3>
 
-                  {/* Description (if exists) */}
-                  {item.descriptionKey && (
+                  {/* Description */}
+                  {item.subtitle && (
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {t(item.descriptionKey)}
+                      {item.subtitle}
                     </p>
                   )}
 
@@ -119,9 +158,87 @@ const DecorPortfolio = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Empty State */}
+        {portfolios.length === 0 && !loading && (
+          <div className="text-center py-20">
+            <p className="text-xl text-gray-500">Chưa có portfolio nào</p>
+          </div>
+        )}
+
+        {/* Pagination */}
+        {allPortfolios.length > itemsPerPage && (() => {
+          const totalPages = Math.ceil(allPortfolios.length / itemsPerPage);
+
+          return (
+            <div className="flex justify-center items-center gap-2 mt-12">
+              {/* Previous Button */}
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded-lg border transition-colors ${currentPage === 1
+                    ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
+                  }`}
+              >
+                ← Previous
+              </button>
+
+              {/* Page Numbers */}
+              <div className="flex gap-2">
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+
+                  // Show first page, last page, current page, and pages around current
+                  if (
+                    page === 1 ||
+                    page === totalPages ||
+                    (page >= currentPage - 1 && page <= currentPage + 1)
+                  ) {
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-10 h-10 rounded-lg border transition-colors ${currentPage === page
+                            ? 'bg-[#cbb9a4] border-[#cbb9a4] text-white font-semibold'
+                            : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-[#cbb9a4] hover:text-[#cbb9a4]'
+                          }`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  }
+
+                  // Show ellipsis
+                  if (page === currentPage - 2 || page === currentPage + 2) {
+                    return (
+                      <span key={page} className="w-10 h-10 flex items-center justify-center text-gray-400">
+                        ...
+                      </span>
+                    );
+                  }
+
+                  return null;
+                })}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded-lg border transition-colors ${currentPage === totalPages
+                    ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
+                  }`}
+              >
+                Next →
+              </button>
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
 };
 
-export default DecorPortfolio;
+export default DecorPortfolioAPI;
