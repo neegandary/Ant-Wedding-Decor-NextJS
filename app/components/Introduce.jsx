@@ -25,7 +25,7 @@ const Introduce = () => {
                 className="pointer-events-none absolute inset-0 w-full h-full object-contain opacity-30"
             />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-5 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Left column: heading + paragraph */}
                     <motion.div
@@ -38,10 +38,10 @@ const Introduce = () => {
                             <p className="text-lg text-red-500 font-semibold tracking-widest mb-4">
                                 {t('helloWeAre')}
                             </p>
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-tight mb-6 whitespace-pre-line">
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-tight mb-6 whitespace-nowrap">
                                 <span className="block">{t('introTitle1')}</span>
                                 <span className="block">{t('introTitle2')}</span>
-                                <span className="block">{t('introTitle3')}</span>
+                                {/* <span className="block">{t('introTitle3')}</span> */}
                             </h2>
                             <p className="text-gray-600 leading-relaxed text-lg text-justify font-light whitespace-pre-line">
                                 {t('introDesc')}
@@ -57,7 +57,7 @@ const Introduce = () => {
                         animate={isInView ? "show" : "hidden"}
                         transition={{ delay: 0.3 }}
                     >
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start h-full mt-20">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start h-full mt-10">
                             {/* Left stack */}
                             <div className="flex flex-col gap-4 h-full">
                                 <motion.img

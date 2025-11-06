@@ -105,9 +105,9 @@ const resources = {
 
       // Introduce
       helloWeAre: "XIN CHÀO, TỤI MÌNH LÀ ANT WEDDING",
-      introTitle1: "Luôn Đổi Mới",
-      introTitle2: "Sáng Tạo",
-      introTitle3: "Uy Tín & Chân Thành",
+      introTitle1: "Luôn Đổi Mới Sáng Tạo",
+      introTitle2: "Uy Tín & Chân Thành",
+      // introTitle3: "",
       introDesc: "Từ những ngày đầu, ANT đã tin rằng một lễ cưới không chỉ cần đẹp – mà còn phải kể được câu chuyện của hai người, qua không gian, ánh sáng và từng cành hoa 🌿\n  Với nền tảng thẩm mỹ vững chắc cùng đội ngũ giàu kinh nghiệm, ANT Wedding tự hào là một trong những đơn vị tiên phong trong lĩnh vực Thiết kế & Trang Trí Tiệc Cưới tại Nha Trang nói riêng, Khánh Hòa nói chung và các khu vực lân cận. Chúng tôi cung cấp dịch vụ trọn gói: Lên kế hoạch – Thiết kế – Trang trí – Thi công, để mỗi buổi tiệc đều mang một tinh thần riêng, phản chiếu phong cách và dấu ấn cá nhân của từng cặp đôi.\n Ant Wedding – nơi những giấc mơ cưới được kể lại bằng sự tinh tế, thấu hiểu và chân thành. ✨\n Ngọc Anh & Nhã Tịnh\n Founders of Ant Wedding",
       introQuote: "Cho đến nay, Ant Wedding vẫn luôn tự hào là đơn vị đặt sự thấu hiểu mong muốn của cặp đôi làm trọng tâm – để mỗi lễ cưới đều phản chiếu đúng tinh thần, cảm xúc và giấc mơ mà dâu rể hằng mong.",
       founders: "Ngọc Anh & Nhã Tịnh",
@@ -262,7 +262,7 @@ const resources = {
       ancestorElegantCeremony3: "VY & KHANG",
 
       // Ancestor CTA
-      ancestorCTATitle: "Cần Tư Vấn Về Lễ Gia Tiên?",
+      ancestorCTATitle: "Bạn Cần Tư Vấn Về Lễ Gia Tiên?",
       ancestorCTASubTitle: "Liên hệ với chúng tôi để được tư vấn chi tiết về phong tục và chuẩn bị",
 
       // Outdoor/Destination Service
@@ -302,7 +302,7 @@ const resources = {
       otherEventsDesc: "Trang trí các sự kiện đặc biệt theo yêu cầu",
       needEventOrganization: "Cần Tổ Chức Sự Kiện?",
       contactForQuote: "Liên hệ với chúng tôi để được tư vấn và báo giá chi tiết",
-      eventCTATitle:"Cần Tổ Chức Sự Kiện?",
+      eventCTATitle:"Bạn Cần Tổ Chức Sự Kiện?",
       eventCTASubTitle:"Liên hệ với chúng tôi để được tư vấn và báo giá chi tiết",
 
       // Portfolio Page
@@ -490,8 +490,8 @@ const resources = {
       // Introduce
       helloWeAre: "HELLO, THIS IS ANT WEDDING",
       introTitle1: "Creative, Genuine,",
-      introTitle2: "Trustworthy,",
-      introTitle3: "Always Inspired.",
+      introTitle2: "Trustworthy, Always Inspired.",
+      // introTitle3: "",
       introDesc: "Founded in 2019, when wedding decoration in Vietnam was becoming more recognized and appreciated by modern couples, ANT Wedding was born from a desire to create weddings that are not only beautiful, but also meaningful.\n From the very beginning, we’ve believed that every celebration should tell a love story – through space, light, and every delicate floral detail🌿\n With a solid foundation in design and years of experience, ANT Wedding proudly stands among the pioneering Wedding Design and Decoration Services in Nha Trang, Khanh Hoa, and surrounding areas. We offer full-service wedding design – from planning and styling to complete decoration – ensuring that every event feels personal, elegant, and truly yours.\n ANT Wedding – where love stories are told through elegance and sincerity. ✨\n Ngoc Anh & Nha Tinh\n Founders of Ant Wedding",
       introQuote: "At Ant Wedding, we believe that true beauty begins with understanding. Every celebration we create reflects the couple’s dreams – just the way they imagined.",
       founders: "Ngoc Anh & Nha Tinh",

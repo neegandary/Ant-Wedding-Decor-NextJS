@@ -49,8 +49,8 @@ export const Event = () => {
     ];
 
     const portfolioImages = [
-        { src: IMAGES.benang1, title: 'REFLECTIONS OF US', endpoint: 'benang' },
-        { src: IMAGES.duyxyen2, title: 'HAPPY BIRTHDAY- EM BÉ NẮNG', endpoint: 'duyxyen' },
+        { src: IMAGES.benang1, title: 'HAPPY BIRTHDAY- EM BÉ NẮNG', endpoint: 'benang' },
+        { src: IMAGES.duyxyen2, title: 'REFLECTIONS OF US', endpoint: 'duyxyen' },
     ];
 
     return (
@@ -111,7 +111,7 @@ export const Event = () => {
                             <h3 className="text-xl font-bold text-gray-800 mb-2">
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 text-sm">
+                            <p className="text-gray-600 text-md">
                                 {feature.description}
                             </p>
                         </motion.div>

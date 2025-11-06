@@ -112,7 +112,7 @@ export const Ancestor = () => {
             </motion.div>
 
             {/* Description Section */}
-            <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -147,14 +147,14 @@ export const Ancestor = () => {
                             </div>
 
                             {/* Title */}
-                            <h3 className="text-base md:text-lg font-bold text-gray-800 mb-1 leading-tight h-14 flex items-center whitespace-nowrap">
+                            <h3 className="text-base md:text-xl font-bold text-gray-800 mb-1 leading-tight h-14 flex items-center whitespace-nowrap">
                                 <span className="line-clamp-2">
                                     {feature.title}
                                 </span>
                             </h3>
 
                             {/* Description */}
-                            <p className="text-gray-600 text-sm leading-relaxed">
+                            <p className="text-gray-600 text-md leading-relaxed">
                                 {feature.description}
                             </p>
 
@@ -254,10 +254,10 @@ export const Ancestor = () => {
                                 <div className="w-16 h-16 bg-[#cbb9a4] text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
                                     {item.step}
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-2">
                                     {item.title}
                                 </h3>
-                                <p className="text-gray-600 text-sm">
+                                <p className="text-gray-600 text-md">
                                     {item.desc}
                                 </p>
                             </motion.div>
@@ -286,7 +286,7 @@ export const Ancestor = () => {
                             <h3 className="text-xl font-bold text-gray-800 mb-2">
                                 {t("ancestorBenefitTitle1")}
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-gray-600 text-md">
                                 {t("ancestorBenefitSubTitle1")}
                             </p>
                         </div>
@@ -300,7 +300,7 @@ export const Ancestor = () => {
                             <h3 className="text-xl font-bold text-gray-800 mb-2">
                                  {t("ancestorBenefitTitle2")}
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-gray-600 text-md">
                                 {t("ancestorBenefitSubTitle2")}
                             </p>
                         </div>
@@ -311,10 +311,10 @@ export const Ancestor = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                 </svg>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-2">
+                            <h3 className="text-xl font-bold text-gray-800 mb-2 whitespace-nowrap">
                                  {t("ancestorBenefitTitle3")}
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-gray-600 text-md">
                                 {t("ancestorBenefitSubTitle3")}
                             </p>
                         </div>
@@ -327,7 +327,7 @@ export const Ancestor = () => {
                             <h3 className="text-xl font-bold text-gray-800 mb-2">
                                  {t("ancestorBenefitTitle4")}
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-gray-600 text-md">
                                 {t("ancestorBenefitSubTitle4")}
                             </p>
                         </div>
