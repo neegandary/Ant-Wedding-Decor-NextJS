@@ -2,8 +2,9 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Edit, Trash2 } from 'lucide-react';
 
 export default function ViewPortfolio() {
@@ -15,15 +16,7 @@ export default function ViewPortfolio() {
   const [loading, setLoading] = useState(true);
   const [portfolio, setPortfolio] = useState(null);
 
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/admin/login');
-    } else if (status === 'authenticated') {
-      fetchPortfolio();
-    }
-  }, [status, portfolioId]);
-
-  const fetchPortfolio = async () => {
+  const fetchPortfolio = useCallback(async () => {
     try {
       const res = await fetch(`/api/admin/portfolios/${portfolioId}`);
       const data = await res.json();
@@ -33,7 +26,15 @@ export default function ViewPortfolio() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [portfolioId]);
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/admin/login');
+    } else if (status === 'authenticated') {
+      fetchPortfolio();
+    }
+  }, [status, router, fetchPortfolio]);
 
   const handleDelete = async () => {
     const confirmed = window.confirm(
@@ -103,8 +104,8 @@ export default function ViewPortfolio() {
 
         <div className="bg-white shadow rounded-lg overflow-hidden">
           {/* Header Image */}
-          <div className="h-64 bg-gray-200">
-            <img src={portfolio.headerImage} alt={portfolio.title} className="w-full h-full object-cover" />
+          <div className="h-64 bg-gray-200 relative">
+            <Image src={portfolio.headerImage} alt={portfolio.title} fill className="object-cover" />
           </div>
 
           <div className="p-8">
@@ -181,8 +182,8 @@ export default function ViewPortfolio() {
                 <h3 className="text-sm font-semibold text-gray-500 mb-4">Gallery ({portfolio.images.length} images)</h3>
                 <div className="grid grid-cols-4 gap-4">
                   {portfolio.images.map((image, index) => (
-                    <div key={index} className="aspect-square bg-gray-100 rounded overflow-hidden">
-                      <img src={image.src} alt="" className="w-full h-full object-cover" />
+                    <div key={index} className="aspect-square bg-gray-100 rounded overflow-hidden relative">
+                      <Image src={image.src} alt="" fill className="object-cover" />
                     </div>
                   ))}
                 </div>

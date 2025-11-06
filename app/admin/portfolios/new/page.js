@@ -4,9 +4,19 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import DatePicker from '@/app/components/DatePicker';
-import ImageUploader from '@/app/components/ImageUploader';
-import Toast from '@/app/components/Toast';
+import dynamic from 'next/dynamic';
+
+const DatePicker = dynamic(() => import('@/app/components/DatePicker'), {
+  ssr: false
+});
+
+const ImageUploader = dynamic(() => import('@/app/components/ImageUploader'), {
+  ssr: false
+});
+
+const Toast = dynamic(() => import('@/app/components/Toast'), {
+  ssr: false
+});
 
 export default function NewPortfolio() {
   const { data: session, status } = useSession();
@@ -396,7 +406,7 @@ export default function NewPortfolio() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex items-center px-6 py-2.5 bg-gradient-to-r from-teal-700 to-teal-600 text-white rounded-lg font-medium hover:from-teal-800 hover:to-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
+                className="flex items-center px-6 py-2.5 bg-linear-to-r from-teal-700 to-teal-600 text-white rounded-lg font-medium hover:from-teal-800 hover:to-teal-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
               >
                 {loading ? (
                   <>

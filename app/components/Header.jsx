@@ -1,8 +1,9 @@
 'use client';
 
-import { Search, Globe, User } from "lucide-react";
+import { Globe, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { IMAGES } from "../constants/image";
 import { useTranslation } from 'react-i18next';
 
@@ -57,8 +58,10 @@ export const Header = () => {
                 {/* Mobile Layout */}
                 <div className="md:hidden flex items-center justify-between">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
-                        <Link href="/"><img src={IMAGES.logo_rmbg} alt="Company logo" className="h-16 w-16" /></Link>
+                    <div className="shrink-0">
+                        <Link href="/">
+                            <Image src={IMAGES.logo_rmbg} alt="Company logo" width={64} height={64} priority />
+                        </Link>
                     </div>
 
                     {/* Hotline & Icons */}
@@ -93,7 +96,9 @@ export const Header = () => {
 
                     {/* Center: logo */}
                     <div className="flex justify-center">
-                        <Link href="/"><img src={IMAGES.logo_rmbg} alt="Company logo" className="h-20 w-20 lg:h-24 lg:w-24" /></Link>
+                        <Link href="/">
+                            <Image src={IMAGES.logo_rmbg} alt="Company logo" width={96} height={96} priority className="h-20 w-20 lg:h-24 lg:w-24" />
+                        </Link>
                     </div>
 
                     {/* Right: icons */}

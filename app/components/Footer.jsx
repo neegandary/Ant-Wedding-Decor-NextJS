@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { IMAGES } from "../constants/image";
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -37,7 +38,7 @@ export const Footer = () => {
                     >
                         <div className="mb-6">
                             <div className="flex justify-center gap-2 mb-2">
-                                <img src={IMAGES.logo_rmbg} alt="logo" className="h-50 w-50" />
+                                <Image src={IMAGES.logo_rmbg} alt="logo" width={200} height={200} />
                             </div>
                         </div>
                         <div className="border-t border-white/30 pt-4 flex justify-center">
@@ -55,7 +56,7 @@ export const Footer = () => {
                     >
                         <div>
                             <div className="flex items-start gap-3">
-                                <svg className="w-5 h-5 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-5 h-5 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                                 <div>
@@ -104,9 +105,11 @@ export const Footer = () => {
                         <h3 className="text-lg font-bold mb-4">{t('followAnt')}</h3>
                         <div className="bg-white rounded-lg p-4">
                             <div className="mb-3">
-                                <img
+                                <Image
                                     src="/logo.ico"
                                     alt="White Wedding Decor"
+                                    width={300}
+                                    height={128}
                                     className="w-full h-32 object-cover rounded"
                                 />
                             </div>

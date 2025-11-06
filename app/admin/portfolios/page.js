@@ -2,10 +2,18 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import Toast from '@/app/components/Toast';
-import ConfirmModal from '@/app/components/ConfirmModal';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+const Toast = dynamic(() => import('@/app/components/Toast'), {
+  ssr: false
+});
+
+const ConfirmModal = dynamic(() => import('@/app/components/ConfirmModal'), {
+  ssr: false
+});
 
 export default function PortfoliosList() {
   const { data: session, status } = useSession();
@@ -22,13 +30,7 @@ export default function PortfoliosList() {
     }
   }, [status, router]);
 
-  useEffect(() => {
-    if (session) {
-      fetchPortfolios();
-    }
-  }, [session, filter]);
-
-  const fetchPortfolios = async () => {
+  const fetchPortfolios = useCallback(async () => {
     try {
       const params = new URLSearchParams();
       if (filter.status) params.append('status', filter.status);
@@ -43,7 +45,13 @@ export default function PortfoliosList() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
+
+  useEffect(() => {
+    if (session) {
+      fetchPortfolios();
+    }
+  }, [session, fetchPortfolios]);
 
   const handleDeleteClick = (id, title) => {
     setConfirmModal({ isOpen: true, portfolioId: id, portfolioTitle: title });
@@ -179,7 +187,7 @@ export default function PortfoliosList() {
         <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gradient-to-r from-teal-700 to-teal-600">
+              <thead className="bg-linear-to-r from-teal-700 to-teal-600">
                 <tr>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Thumbnail</th>
                   <th className="px-6 py-4 text-left text-xs font-semibold text-white uppercase tracking-wider">Title</th>
@@ -206,9 +214,11 @@ export default function PortfoliosList() {
                   portfolios.map((portfolio) => (
                     <tr key={portfolio._id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4">
-                        <img 
+                        <Image 
                           src={portfolio.thumbnailImage} 
-                          alt={portfolio.title} 
+                          alt={portfolio.title}
+                          width={80}
+                          height={80}
                           className="w-20 h-20 object-cover rounded-lg shadow-sm border border-gray-200" 
                         />
                       </td>

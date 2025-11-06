@@ -1,12 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Slider from 'react-slick';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { useRouter } from 'next/navigation';
 import { IMAGES } from '../constants/image';
 import { useTranslation } from 'react-i18next';
+
+const Slider = dynamic(() => import('react-slick'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="w-12 h-12 border-4 border-emerald-700 border-t-transparent rounded-full animate-spin"></div>
+    </div>
+  )
+});
 
 const Experience = () => {
     const router = useRouter();
@@ -103,9 +113,11 @@ const Experience = () => {
                         {row1Images.map((item, idx) => (
                             <div key={`row1-${idx}`} className="px-2">
                                 <div className="relative group overflow-hidden rounded-lg cursor-pointer" onClick={() => handleImageClick(item.endpoint)}>
-                                    <img
+                                    <Image
                                         src={item.img}
                                         alt={item.title}
+                                        width={400}
+                                        height={192}
                                         className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                                     />
                                     {/* Hover Overlay */}
@@ -120,7 +132,7 @@ const Experience = () => {
                                         <div className="flex flex-col gap-2 mb-4">
                                             {item.tags.map((tag, i) => (
                                                 <div key={i} className="flex items-center gap-2 text-sm">
-                                                    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                     </svg>
                                                     <span className="whitespace-nowrap">{t(tag)}</span>
@@ -142,9 +154,11 @@ const Experience = () => {
                         {row2Images.map((item, idx) => (
                             <div key={`row2-${idx}`} className="px-2">
                                 <div className="relative group overflow-hidden rounded-lg cursor-pointer" onClick={() => handleImageClick(item.endpoint)}>
-                                    <img
+                                    <Image
                                         src={item.img}
                                         alt={item.title}
+                                        width={400}
+                                        height={192}
                                         className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                                     />
                                     {/* Hover Overlay */}
@@ -159,7 +173,7 @@ const Experience = () => {
                                         <div className="flex flex-col gap-2 mb-4">
                                             {item.tags.map((tag, i) => (
                                                 <div key={i} className="flex items-center gap-2 text-sm">
-                                                    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                     </svg>
                                                     <span className="whitespace-nowrap">{t(tag)}</span>

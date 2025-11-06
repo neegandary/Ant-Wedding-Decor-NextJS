@@ -2,10 +2,15 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { X, Upload, Plus } from 'lucide-react';
-import Toast from '@/app/components/Toast';
+import dynamic from 'next/dynamic';
+
+const Toast = dynamic(() => import('@/app/components/Toast'), {
+  ssr: false
+});
 
 export default function EditPortfolio() {
   const { data: session, status } = useSession();
@@ -20,15 +25,7 @@ export default function EditPortfolio() {
   const [formData, setFormData] = useState(null);
   const [toast, setToast] = useState(null);
 
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/admin/login');
-    } else if (status === 'authenticated') {
-      fetchPortfolio();
-    }
-  }, [status, portfolioId]);
-
-  const fetchPortfolio = async () => {
+  const fetchPortfolio = useCallback(async () => {
     try {
       const res = await fetch(`/api/admin/portfolios/${portfolioId}`);
       const data = await res.json();
@@ -38,7 +35,15 @@ export default function EditPortfolio() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [portfolioId]);
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/admin/login');
+    } else if (status === 'authenticated') {
+      fetchPortfolio();
+    }
+  }, [status, router, fetchPortfolio]);
 
   // Hàm resize và chuyển đổi ảnh sang WebP
   const processImage = async (file, maxSizeMB = 5, quality = 0.85, maxWidth = 1920) => {
@@ -328,7 +333,7 @@ export default function EditPortfolio() {
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail Image *</label>
                 {formData.thumbnailImage && (
-                  <img src={formData.thumbnailImage} alt="Thumbnail" className="w-32 h-32 object-cover rounded mb-2" />
+                  <Image src={formData.thumbnailImage} alt="Thumbnail" width={128} height={128} className="w-32 h-32 object-cover rounded mb-2" />
                 )}
                 <input
                   type="file"
@@ -342,7 +347,7 @@ export default function EditPortfolio() {
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Header Image *</label>
                 {formData.headerImage && (
-                  <img src={formData.headerImage} alt="Header" className="w-64 h-32 object-cover rounded mb-2" />
+                  <Image src={formData.headerImage} alt="Header" width={256} height={128} className="w-64 h-32 object-cover rounded mb-2" />
                 )}
                 <input
                   type="file"
@@ -366,7 +371,7 @@ export default function EditPortfolio() {
                 <div className="grid grid-cols-4 gap-4">
                   {formData.images?.map((image, index) => (
                     <div key={index} className="relative group">
-                      <img src={image.src} alt="" className="w-full h-32 object-cover rounded" />
+                      <Image src={image.src} alt="" width={300} height={128} className="w-full h-32 object-cover rounded" />
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
