@@ -21,6 +21,7 @@ export default function PortfoliosList() {
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState({ status: '', category: '', search: '' });
+  const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, pages: 0 });
   const [toast, setToast] = useState(null);
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, portfolioId: null, portfolioTitle: '' });
 
@@ -33,6 +34,8 @@ export default function PortfoliosList() {
   const fetchPortfolios = useCallback(async () => {
     try {
       const params = new URLSearchParams();
+      params.append('page', pagination.page.toString());
+      params.append('limit', pagination.limit.toString());
       if (filter.status) params.append('status', filter.status);
       if (filter.category) params.append('category', filter.category);
       if (filter.search) params.append('search', filter.search);
@@ -40,12 +43,15 @@ export default function PortfoliosList() {
       const res = await fetch(`/api/admin/portfolios?${params}`);
       const data = await res.json();
       setPortfolios(data.portfolios || []);
+      if (data.pagination) {
+        setPagination(prev => ({ ...prev, ...data.pagination }));
+      }
     } catch (error) {
       console.error('Error fetching portfolios:', error);
     } finally {
       setLoading(false);
     }
-  }, [filter]);
+  }, [filter, pagination.page, pagination.limit]);
 
   useEffect(() => {
     if (session) {
@@ -155,13 +161,19 @@ export default function PortfoliosList() {
                 placeholder="Tìm kiếm theo tiêu đề, slug..."
                 className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent"
                 value={filter.search}
-                onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                onChange={(e) => {
+                  setFilter({ ...filter, search: e.target.value });
+                  setPagination(prev => ({ ...prev, page: 1 }));
+                }}
               />
             </div>
             <select
               className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent bg-white"
               value={filter.status}
-              onChange={(e) => setFilter({ ...filter, status: e.target.value })}
+              onChange={(e) => {
+                setFilter({ ...filter, status: e.target.value });
+                setPagination(prev => ({ ...prev, page: 1 }));
+              }}
             >
               <option value="">Tất cả trạng thái</option>
               <option value="published">Published</option>
@@ -171,7 +183,10 @@ export default function PortfoliosList() {
             <select
               className="px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent bg-white"
               value={filter.category}
-              onChange={(e) => setFilter({ ...filter, category: e.target.value })}
+              onChange={(e) => {
+                setFilter({ ...filter, category: e.target.value });
+                setPagination(prev => ({ ...prev, page: 1 }));
+              }}
             >
               <option value="">Tất cả danh mục</option>
               <option value="weddingDecor">Wedding Decor</option>
@@ -277,6 +292,91 @@ export default function PortfoliosList() {
             </table>
           </div>
         </div>
+
+        {/* Pagination */}
+        {pagination.pages > 1 && (
+          <div className="mt-6 flex items-center justify-between bg-white px-4 py-3 rounded-lg shadow-md border border-gray-200">
+            <div className="flex items-center gap-2 text-sm text-gray-700">
+              <span className="font-medium">
+                Hiển thị {((pagination.page - 1) * pagination.limit) + 1} - {Math.min(pagination.page * pagination.limit, pagination.total)} 
+              </span>
+              <span className="text-gray-500">trong tổng số</span>
+              <span className="font-medium">{pagination.total}</span>
+              <span className="text-gray-500">portfolios</span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Previous Button */}
+              <button
+                onClick={() => setPagination(prev => ({ ...prev, page: Math.max(1, prev.page - 1) }))}
+                disabled={pagination.page === 1}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Page Numbers */}
+              <div className="flex items-center gap-1">
+                {Array.from({ length: pagination.pages }, (_, i) => i + 1).map((pageNum) => {
+                  // Show first page, last page, current page, and pages around current
+                  if (
+                    pageNum === 1 ||
+                    pageNum === pagination.pages ||
+                    (pageNum >= pagination.page - 1 && pageNum <= pagination.page + 1)
+                  ) {
+                    return (
+                      <button
+                        key={pageNum}
+                        onClick={() => setPagination(prev => ({ ...prev, page: pageNum }))}
+                        className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          pagination.page === pageNum
+                            ? 'bg-teal-700 text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    );
+                  } else if (
+                    pageNum === pagination.page - 2 ||
+                    pageNum === pagination.page + 2
+                  ) {
+                    return <span key={pageNum} className="px-2 text-gray-400">...</span>;
+                  }
+                  return null;
+                })}
+              </div>
+
+              {/* Next Button */}
+              <button
+                onClick={() => setPagination(prev => ({ ...prev, page: Math.min(prev.pages, prev.page + 1) }))}
+                disabled={pagination.page === pagination.pages}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Items per page */}
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-700">Hiển thị:</label>
+              <select
+                value={pagination.limit}
+                onChange={(e) => setPagination(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent bg-white"
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
