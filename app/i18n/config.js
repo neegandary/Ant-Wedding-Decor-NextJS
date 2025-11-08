@@ -11,6 +11,7 @@ const resources = {
       home: "TRANG CHỦ",
       services: "DỊCH VỤ",
       work: "ANTWORK",
+      blog: "BLOG",
       about: "GIỚI THIỆU",
       contact: "LIÊN HỆ",
 
@@ -393,6 +394,7 @@ const resources = {
       home: "HOME",
       services: "SERVICES",
       work: "ANTWORK",
+      blog: "BLOG",
       about: "ABOUT US",
       contact: "CONTACT",
 

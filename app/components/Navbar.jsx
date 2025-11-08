@@ -93,6 +93,7 @@ export const Navbar = () => {
                     </div>
 
                     <Link href='/portfolio' className={`hover:text-[#A48D78] transition-colors ${pathname === '/portfolio' ? 'text-[#A48D78]' : ''}`}>{t('work')}</Link>
+                    <Link href='/blog' className={`hover:text-[#A48D78] transition-colors ${pathname.startsWith('/blog') ? 'text-[#A48D78]' : ''}`}>{t('blog')}</Link>
                     <Link href='/about' className={`hover:text-[#A48D78] transition-colors ${pathname === '/about' ? 'text-[#A48D78]' : ''}`}>{t('about')}</Link>
                     <Link href='/contact' className={`hover:text-[#A48D78] transition-colors ${pathname === '/contact' ? 'text-[#A48D78]' : ''}`}>{t('contact')}</Link>
                 </nav>
@@ -171,6 +172,13 @@ export const Navbar = () => {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 {t('work')}
+                            </Link>
+                            <Link 
+                                href='/blog' 
+                                className="text-white hover:text-[#A48D78] transition-colors py-2"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                {t('blog')}
                             </Link>
                             <Link 
                                 href='/about' 
