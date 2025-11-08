@@ -491,8 +491,8 @@ const resources = {
 
       // Introduce
       helloWeAre: "HELLO, THIS IS ANT WEDDING",
-      introTitle1: "Creative, Genuine,",
-      introTitle2: "Trustworthy, Always Inspired.",
+      introTitle1: "Creative, Genuine.",
+      introTitle2: "Trustworthy\n Always Inspired,",
       // introTitle3: "",
       introDesc: "Founded in 2019, when wedding decoration in Vietnam was becoming more recognized and appreciated by modern couples, ANT Wedding was born from a desire to create weddings that are not only beautiful, but also meaningful.\n From the very beginning, we’ve believed that every celebration should tell a love story – through space, light, and every delicate floral detail🌿\n With a solid foundation in design and years of experience, ANT Wedding proudly stands among the pioneering Wedding Design and Decoration Services in Nha Trang, Khanh Hoa, and surrounding areas. We offer full-service wedding design – from planning and styling to complete decoration – ensuring that every event feels personal, elegant, and truly yours.\n ANT Wedding – where love stories are told through elegance and sincerity. ✨\n Ngoc Anh & Nha Tinh\n Founders of Ant Wedding",
       introQuote: "At Ant Wedding, we believe that true beauty begins with understanding. Every celebration we create reflects the couple’s dreams – just the way they imagined.",

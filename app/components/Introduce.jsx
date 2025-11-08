@@ -38,10 +38,9 @@ const Introduce = () => {
                             <p className="text-lg text-red-500 font-semibold tracking-widest mb-4">
                                 {t('helloWeAre')}
                             </p>
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-tight mb-6 whitespace-nowrap">
-                                <span className="block">{t('introTitle1')}</span>
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-tight mb-6 whitespace-pre">
                                 <span className="block">{t('introTitle2')}</span>
-                                {/* <span className="block">{t('introTitle3')}</span> */}
+                                <span className="block">{t('introTitle1')}</span>
                             </h2>
                             <p className="text-gray-600 leading-relaxed text-lg text-justify font-light whitespace-pre-line">
                                 {t('introDesc')}
