@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 
 const ImageUploader = dynamic(() => import('@/app/components/ImageUploader'), { ssr: false });
 const Toast = dynamic(() => import('@/app/components/Toast'), { ssr: false });
-const TipTapEditor = dynamic(() => import('@/app/components/TipTapEditor'), { ssr: false });
 
 export default function NewBlog() {
   const { data: session, status } = useSession();
@@ -37,7 +36,7 @@ export default function NewBlog() {
     author: 'Ant Wedding',
     category: 'cam-nang',
     excerpt: '',
-    content: '',
+    content: '<p>Nội dung sẽ được thêm vào sau...</p>',
     thumbnailImage: '',
     headerImage: '',
     tags: [],
@@ -52,7 +51,7 @@ export default function NewBlog() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/admin/login');
+      router.push('/login');
     }
   }, [status, router]);
 
@@ -95,39 +94,30 @@ export default function NewBlog() {
     <div className="min-h-screen bg-[#f7f6eb]">
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
-      {/* Header */}
-      <nav className="bg-[#cbb9a4] shadow-md mb-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/admin" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                <span className="text-lg font-bold">Ant Wedding Admin</span>
-              </Link>
-              <Link href="/admin/blogs" className="flex items-center space-x-1 text-white/80 hover:text-white transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
-                <span className="font-medium">Blogs</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-12">
         <div className="mb-6">
-          <div className="flex items-center space-x-3 mb-2">
-            <div className="w-10 h-10 bg-teal-700 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-10 h-10 bg-teal-700 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+                <h2 className="text-3xl font-bold text-gray-800">Tạo Blog Mới</h2>
+              </div>
+              <p className="text-gray-600 ml-13">Thêm bài viết blog mới vào hệ thống</p>
             </div>
-            <h2 className="text-3xl font-bold text-gray-800">Tạo Blog Mới</h2>
+            <Link
+              href="/admin/blogs"
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              <span>Quay lại</span>
+            </Link>
           </div>
-          <p className="text-gray-600 ml-13">Thêm bài viết blog mới vào hệ thống</p>
         </div>
 
         {error && (
@@ -251,30 +241,7 @@ export default function NewBlog() {
                   required={true}
                   helperText="Ảnh hiển thị trong danh sách blog"
                 />
-
-                <ImageUploader
-                  label="Header Image"
-                  value={formData.headerImage}
-                  onChange={(e) => setFormData({ ...formData, headerImage: e.target.value })}
-                  required={true}
-                  helperText="Ảnh header trang chi tiết"
-                />
               </div>
-            </div>
-
-            {/* Content */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-                </svg>
-                Nội Dung
-              </h3>
-              <TipTapEditor
-                content={formData.content}
-                onChange={(html) => setFormData({ ...formData, content: html })}
-              />
-              <p className="mt-2 text-xs text-gray-600">Sử dụng toolbar để format nội dung. Hỗ trợ headings, lists, links, images, và nhiều hơn nữa.</p>
             </div>
 
             {/* Tags & Meta */}

@@ -11,8 +11,9 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
-    const blog = await Blog.findById(params.id);
+    const blog = await Blog.findById(id);
 
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
@@ -33,11 +34,14 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
     const data = await request.json();
+    
+    console.log('PUT /api/admin/blogs/[id] - Received data:', data);
 
     const blog = await Blog.findByIdAndUpdate(
-      params.id,
+      id,
       data,
       { new: true, runValidators: true }
     );
@@ -45,6 +49,12 @@ export async function PUT(request, { params }) {
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });
     }
+
+    console.log('PUT /api/admin/blogs/[id] - Updated blog:', {
+      id: blog._id,
+      contentVersion: blog.contentVersion,
+      contentBlocksCount: blog.contentBlocks?.length || 0
+    });
 
     return NextResponse.json({ blog });
   } catch (error) {
@@ -61,8 +71,9 @@ export async function DELETE(request, { params }) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
-    const blog = await Blog.findByIdAndDelete(params.id);
+    const blog = await Blog.findByIdAndDelete(id);
 
     if (!blog) {
       return NextResponse.json({ error: 'Blog not found' }, { status: 404 });

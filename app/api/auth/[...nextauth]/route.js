@@ -67,7 +67,7 @@ const authOptions = {
   },
   
   pages: {
-    signIn: '/admin/login',
+    signIn: '/login',
   },
   
   session: {
