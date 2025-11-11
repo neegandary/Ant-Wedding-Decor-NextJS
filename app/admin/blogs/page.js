@@ -22,7 +22,7 @@ export default function BlogsList() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/admin/login');
+      router.push('/login');
     }
   }, [status, router]);
 
@@ -100,40 +100,24 @@ export default function BlogsList() {
         type="danger"
       />
 
-      {/* Header */}
-      <nav className="bg-[#cbb9a4] shadow-md mb-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/admin" className="flex items-center space-x-2 text-white hover:text-white/90 transition-colors">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                <span className="text-lg font-bold">Ant Wedding Admin</span>
-              </Link>
-              <div className="hidden md:flex items-center space-x-1 bg-white/20 px-3 py-1 rounded-lg">
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                </svg>
-                <span className="text-white font-medium">Blogs</span>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <Link
-                href="/admin/blogs/new"
-                className="flex items-center space-x-2 px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors shadow-md"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-                <span className="font-medium">Tạo mới</span>
-              </Link>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Page Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Quản lý Blogs</h2>
+            <p className="text-gray-600 mt-1">Quản lý các bài viết blog</p>
           </div>
+          <Link
+            href="/admin/blogs/new"
+            className="flex items-center space-x-2 px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors shadow-md"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            <span className="font-medium">Tạo mới</span>
+          </Link>
         </div>
-      </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filters */}
         <div className="mb-6 bg-white rounded-lg shadow-md p-4">
           <div className="flex flex-col md:flex-row gap-4">

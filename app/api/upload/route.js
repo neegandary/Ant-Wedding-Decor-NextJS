@@ -23,7 +23,7 @@ export async function POST(request) {
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 15);
     const fileExtension = file.name.split('.').pop();
-    const fileName = `portfolio/${timestamp}-${randomString}.${fileExtension}`;
+    const fileName = `blogs/${timestamp}-${randomString}.${fileExtension}`;
 
     // Convert file to buffer
     const bytes = await file.arrayBuffer();

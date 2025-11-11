@@ -39,7 +39,7 @@ export default function EditPortfolio() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/admin/login');
+      router.push('/login');
     } else if (status === 'authenticated') {
       fetchPortfolio();
     }
