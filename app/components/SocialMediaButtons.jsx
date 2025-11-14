@@ -40,7 +40,7 @@ const SocialMediaButtons = () => {
             {/* WhatsApp */}
             <div className="relative h-10 flex justify-end">
                 <a
-                    href="https://wa.me/YOUR_PHONE_NUMBER"
+                    href="https://wa.me/84794672928"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute right-0 w-10 h-10 flex items-center justify-end bg-[#25D366] hover:w-28 transition-all duration-300 group overflow-hidden"
