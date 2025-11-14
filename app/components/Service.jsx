@@ -153,10 +153,10 @@ const Service = () => {
                 </div>
             </section>
 
-                <section className="bg-[#f8f6ec] py-16">
+                <section className="bg-[#f8f6ec] py-12 sm:py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.h2
-              className="text-4xl font-black text-center text-gray-800 mb-4"
+              className="text-2xl sm:text-3xl md:text-4xl font-black text-center text-gray-800 mb-3 sm:mb-4 whitespace-nowrap"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -164,11 +164,11 @@ const Service = () => {
             >
               {t('whyChooseUs')}
             </motion.h2>
-            <div className="flex items-center justify-center gap-2 mb-4">
-              <div className="h-px bg-gradient-to-r from-transparent via-[#cbb9a4] to-transparent w-76"></div>
+            <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+              <div className="h-px bg-gradient-to-r from-transparent via-[#cbb9a4] to-transparent w-48 sm:w-64 md:w-76"></div>
             </div>
             <motion.p
-              className="text-center text-lg  text-gray-600 max-w-3xl mx-auto mb-12 whitespace-pre font-light"
+              className="text-center text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto mb-8 sm:mb-10 md:mb-12 font-light px-2"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -177,48 +177,48 @@ const Service = () => {
               {t('whyChooseDesc')}
             </motion.p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
               {/* Card 01 - Fade từ trái */}
               <motion.div
-                className="text-center"
+                className="text-center px-2"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <div className="text-6xl font-black text-emerald-700/20 mb-2">01.</div>
-                <h3 className="text-xl font-black text-gray-800 mb-2">{t('trustedBrand')}</h3>
-                <p className="text-md text-gray-600 leading-relaxed font-light">
+                <div className="text-5xl sm:text-6xl font-black text-emerald-700/20 mb-2">01.</div>
+                <h3 className="text-lg sm:text-xl font-black text-gray-800 mb-2">{t('trustedBrand')}</h3>
+                <p className="text-sm sm:text-md text-gray-600 leading-relaxed font-light">
                   {t('trustedBrandDesc')}
                 </p>
               </motion.div>
 
               {/* Card 02 - Fade từ dưới lên */}
               <motion.div
-                className="text-center"
+                className="text-center px-2"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <div className="text-6xl font-bold text-emerald-700/20 mb-2">02.</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{t('professionalProcess')}</h3>
-                <p className="text-md text-gray-600 leading-relaxed font-light">
+                <div className="text-5xl sm:text-6xl font-bold text-emerald-700/20 mb-2">02.</div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">{t('professionalProcess')}</h3>
+                <p className="text-sm sm:text-md text-gray-600 leading-relaxed font-light">
                   {t('professionalProcessDesc')}
                 </p>
               </motion.div>
 
               {/* Card 03 - Fade từ phải */}
               <motion.div
-                className="text-center"
+                className="text-center px-2"
                 initial={{ opacity: 0, x: 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, ease: "easeOut" }}
               >
-                <div className="text-6xl font-bold text-emerald-700/20 mb-2">03.</div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{t('highExpertise')}</h3>
-                <p className="text-md text-gray-600 leading-relaxed font-light">
+                <div className="text-5xl sm:text-6xl font-bold text-emerald-700/20 mb-2">03.</div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">{t('highExpertise')}</h3>
+                <p className="text-sm sm:text-md text-gray-600 leading-relaxed font-light">
                   {t('highExpertiseDesc')}
                 </p>
               </motion.div>
