@@ -69,7 +69,7 @@ const resources = {
       appointmentNote: "(Vui lòng đặt lịch hẹn trước)",
       followAnt: "FOLLOW ANT",
       followers: "người theo dõi",
-      followPage: "Theo dõi trang",
+      followPage: "Nhắn tin ngay!",
       share: "Chia sẻ",
       tagline: "Ant Wedding – Draw Your Wedding Dream",
       footerNote: "from ANT Wedding with So Much Love",

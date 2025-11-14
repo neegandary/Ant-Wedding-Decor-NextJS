@@ -119,12 +119,12 @@ const Service = () => {
                         {/* Left Side - Stats */}
                         <div className="w-full md:w-1/2 flex flex-row items-center justify-center px-4 md:px-8 py-8 md:py-0">
                             <div className="text-center flex-1">
-                                <div className="text-4xl md:text-5xl lg:text-7xl font-bold mb-2"><CountUpNumber target={10} /></div>
+                                <div className="text-4xl md:text-5xl lg:text-7xl font-bold mb-2"><CountUpNumber target={10} suffix={"+"} /></div>
                                 <div className="text-xs md:text-lg uppercase tracking-wide">{t('yearsExperience')}</div>
                             </div>
                             <div className="h-20 md:h-32 w-px bg-white/50 mx-4 md:mx-8"></div>
                             <div className="text-center flex-1">
-                                <div className="text-4xl md:text-5xl lg:text-7xl font-bold mb-2"><CountUpNumber target={300} /></div>
+                                <div className="text-4xl md:text-5xl lg:text-7xl font-bold mb-2"><CountUpNumber target={300} suffix={"+"} /></div>
                                 <div className="text-xs md:text-lg uppercase tracking-wide whitespace-pre">{t('couplesServed')}</div>
                             </div>
                         </div>
