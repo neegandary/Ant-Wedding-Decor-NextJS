@@ -4,6 +4,9 @@ import { I18nProvider } from "./i18n/I18nProvider";
 export const metadata = {
   title: "Ant Wedding - Trang Trí Tiệc Cưới Nha Trang",
   description: "Ant Wedding - Dịch vụ trang trí tiệc cưới chuyên nghiệp tại Nha Trang",
+  icons: {
+    icon: '/logo.ico',
+  },
 };
 
 export default function RootLayout({ children }) {

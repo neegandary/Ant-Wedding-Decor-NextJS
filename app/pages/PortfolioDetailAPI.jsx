@@ -186,7 +186,7 @@ const PortfolioDetailAPI = ({ params }) => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-wider px-4 text-center"
         >
-          {portfolio.title}
+          {typeof portfolio.title === 'object' ? portfolio.title[t('currentLang') || 'vi'] || portfolio.title.vi : portfolio.title}
         </motion.h1>
       </div>
 
@@ -198,50 +198,16 @@ const PortfolioDetailAPI = ({ params }) => {
             data-sticky-sidebar
             className="lg:col-span-1 bg-white rounded-lg shadow-md p-5 sm:p-6 lg:p-8"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">{portfolio.title}</h2>
-            <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">{portfolio.subtitle}</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+              {typeof portfolio.title === 'object' ? portfolio.title[t('currentLang') || 'vi'] || portfolio.title.vi : portfolio.title}
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
+              {typeof portfolio.subtitle === 'object' ? portfolio.subtitle[t('currentLang') || 'vi'] || portfolio.subtitle.vi : portfolio.subtitle}
+            </p>
 
-            <div className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 whitespace-pre-line">
-              {portfolio.description}
+            <div className="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+              {typeof portfolio.description === 'object' ? portfolio.description[t('currentLang') || 'vi'] || portfolio.description.vi : portfolio.description}
             </div>
-
-            <div className="border-t border-gray-200 pt-4 sm:pt-6 mb-4 sm:mb-6">
-              <p className="text-xs sm:text-sm mb-2">
-                <span className="font-semibold">{t('concept')}</span> {portfolio.details?.concept}
-              </p>
-              <p className="text-xs sm:text-sm mb-2">
-                <span className="font-semibold">{t('weddingAddress')}</span> {portfolio.details?.address}
-              </p>
-              <p className="text-xs sm:text-sm">
-                <span className="font-semibold">{t('photographer')}</span> {portfolio.details?.photographer}
-              </p>
-            </div>
-
-            <div className="border-t border-gray-200 pt-4 sm:pt-6 mb-4 sm:mb-6">
-              <h3 className="font-bold text-gray-800 mb-3 text-sm sm:text-base">ANT WEDDING - DECOR & MORE</h3>
-              <p className="text-xs sm:text-sm mb-2">
-                <span className="font-semibold">Hotline:</span> {portfolio.contact?.hotline}
-              </p>
-              <p className="text-xs sm:text-sm">
-                <span className="font-semibold">Email:</span> {portfolio.contact?.email}
-              </p>
-            </div>
-
-            {portfolio.tags && portfolio.tags.length > 0 && (
-              <div className="border-t border-gray-200 pt-4 sm:pt-6">
-                <h4 className="font-semibold text-gray-800 mb-3 text-sm sm:text-base">{t('tags')}</h4>
-                <div className="flex flex-wrap gap-2">
-                  {portfolio.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2.5 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full hover:bg-orange-100 hover:text-orange-600 transition-colors cursor-pointer"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
           </aside>
 
           {/* Right Column - Gallery */}

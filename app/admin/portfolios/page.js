@@ -222,7 +222,9 @@ export default function PortfoliosList() {
                         />
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm font-semibold text-gray-900">{portfolio.title}</div>
+                        <div className="text-sm font-semibold text-gray-900">
+                          {typeof portfolio.title === 'object' ? portfolio.title.vi || portfolio.title.en : portfolio.title}
+                        </div>
                         <div className="text-xs text-gray-500 mt-1 font-mono">{portfolio.slug}</div>
                       </td>
                       <td className="px-6 py-4">
@@ -259,7 +261,7 @@ export default function PortfoliosList() {
                             Edit
                           </Link>
                           <button
-                            onClick={() => handleDeleteClick(portfolio._id, portfolio.title)}
+                            onClick={() => handleDeleteClick(portfolio._id, typeof portfolio.title === 'object' ? portfolio.title.vi || portfolio.title.en : portfolio.title)}
                             className="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
                           >
                             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

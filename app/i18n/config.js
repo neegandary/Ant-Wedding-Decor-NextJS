@@ -4,6 +4,9 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   vi: {
     translation: {
+      // Language
+      currentLang: "vi",
+      
       // Header
       hotline: "Hotline",
 
@@ -14,6 +17,20 @@ const resources = {
       blog: "BLOG",
       about: "GIỚI THIỆU",
       contact: "LIÊN HỆ",
+
+      // Blog Categories
+      allCategories: "Tất cả",
+      camNang: "CẨM NANG",
+      realLifeWedding: "Real-life Wedding",
+      tuVanDamCuoi: "TƯ VẤN ĐÁM CƯỚI",
+      cuoiTruyen: "Cưới truyền",
+      dichVuKhac: "DỊCH VỤ KHÁC",
+      
+      // Blog Actions
+      readMore: "Đọc thêm",
+      backToBlogList: "Quay lại danh sách blog",
+      relatedPosts: "Bài viết liên quan",
+      categories: "DANH MỤC",
 
       // Services Dropdown
       destinationWedding: "Trang Trí Tiệc Cưới Ngoài Trời",
@@ -69,8 +86,8 @@ const resources = {
       appointmentNote: "(Vui lòng đặt lịch hẹn trước)",
       followAnt: "FOLLOW ANT",
       followers: "người theo dõi",
-      followPage: "Nhắn tin ngay!",
-      share: "Chia sẻ",
+      followPage: "Follow Ant Page",
+      share: "Nhắn tin ngay!",
       tagline: "Ant Wedding – Draw Your Wedding Dream",
       footerNote: "from ANT Wedding with So Much Love",
 
@@ -78,6 +95,7 @@ const resources = {
       officeAddress: "Văn phòng",
       nhatrangAddress: "Chung Cư Ngô Gia Tự - Nha Trang - Khánh Hòa - Việt Nam",
       makeAppointment: "(Vui lòng đặt lịch hẹn trước khi đến)",
+      mapAddress: "Xem trên bản đồ",
       contactInfo: "Liên hệ:",
       consultant: "Tư vấn dịch vụ:",
       workingHours: "Giờ làm việc:",
@@ -149,6 +167,7 @@ const resources = {
       letUsJoinYou: "Hãy Để Chúng Tôi Đồng Hành Cùng Bạn",
       contactForPlanning: "Liên hệ ngay để được tư vấn và lên kế hoạch cho ngày trọng đại",
       sendConsultationRequest: "Gửi Yêu Cầu Tư Vấn",
+      consultationFormLink: "https://docs.google.com/forms/d/1-RAkN08rzL6MD5pOD_e2tq8BC0DOq7gLQq6dVdybLIs/viewform?edit_requested=true",
 
       // Service Detail Pages - Common
       aboutService: "Về Dịch Vụ",
@@ -246,15 +265,15 @@ const resources = {
       ancestorCompletionDesc: "Kiểm tra & bàn giao hoàn chỉnh",
 
       //Ancestor Benefit
-      ancestorBenefitTitle:"Nét Đẹp Truyền Thống Trong Văn Hoá Cưới Việt Nam",
-      ancestorBenefitTitle1:"Bày Tỏ Lòng Biết Ơn",
-      ancestorBenefitSubTitle1:"Lễ gia tiên là nghi thức thiêng liêng để đôi uyên ương dâng hương, bày tỏ lòng thành kính với ông bà tổ tiên – những người đã sinh thành, dưỡng dục và phù hộ cho con cháu. Đây là cách thể hiện đạo hiếu và gìn giữ nét đẹp truyền thống trong mỗi gia đình Việt.",
-      ancestorBenefitTitle2:"Chính Thức Ra Mắt Hai Họ ",
-       ancestorBenefitSubTitle2:"Buổi lễ là dịp trang trọng để cô dâu, chú rể ra mắt hai bên gia đình. Từ đây, hai họ chính thức kết giao, gắn bó và chứng kiến khoảnh khắc hai người nên duyên vợ chồng – mở đầu cho một hành trình mới đầy yêu thương.",
-      ancestorBenefitTitle3:"Cầu Chúc Hạnh Phúc & Bình An ",
-       ancestorBenefitSubTitle3:"Lễ gia tiên không chỉ là nghi thức, mà còn mang ý nghĩa cầu chúc cho cuộc sống hôn nhân của đôi trẻ luôn hạnh phúc, viên mãn, thuận hòa – được tổ tiên phù hộ và che chở.",
-      ancestorBenefitTitle4:"Gìn Giữ & Tiếp Nối ",
-       ancestorBenefitSubTitle4:"Trong nhịp sống hiện đại, Lễ gia tiên là sợi dây kết nối giữa truyền thống và hiện tại – giúp thế hệ trẻ hiểu, trân trọng và tiếp nối những giá trị tốt đẹp của văn hoá Việt trong ngày trọng đại của đời mình.",
+      ancestorBenefitTitle: "Nét Đẹp Truyền Thống Trong Văn Hoá Cưới Việt Nam",
+      ancestorBenefitTitle1: "Bày Tỏ Lòng Biết Ơn",
+      ancestorBenefitSubTitle1: "Lễ gia tiên là nghi thức thiêng liêng để đôi uyên ương dâng hương, bày tỏ lòng thành kính với ông bà tổ tiên – những người đã sinh thành, dưỡng dục và phù hộ cho con cháu. Đây là cách thể hiện đạo hiếu và gìn giữ nét đẹp truyền thống trong mỗi gia đình Việt.",
+      ancestorBenefitTitle2: "Chính Thức Ra Mắt Hai Họ ",
+      ancestorBenefitSubTitle2: "Buổi lễ là dịp trang trọng để cô dâu, chú rể ra mắt hai bên gia đình. Từ đây, hai họ chính thức kết giao, gắn bó và chứng kiến khoảnh khắc hai người nên duyên vợ chồng – mở đầu cho một hành trình mới đầy yêu thương.",
+      ancestorBenefitTitle3: "Cầu Chúc Hạnh Phúc & Bình An ",
+      ancestorBenefitSubTitle3: "Lễ gia tiên không chỉ là nghi thức, mà còn mang ý nghĩa cầu chúc cho cuộc sống hôn nhân của đôi trẻ luôn hạnh phúc, viên mãn, thuận hòa – được tổ tiên phù hộ và che chở.",
+      ancestorBenefitTitle4: "Gìn Giữ & Tiếp Nối ",
+      ancestorBenefitSubTitle4: "Trong nhịp sống hiện đại, Lễ gia tiên là sợi dây kết nối giữa truyền thống và hiện tại – giúp thế hệ trẻ hiểu, trân trọng và tiếp nối những giá trị tốt đẹp của văn hoá Việt trong ngày trọng đại của đời mình.",
 
       // Ancestor Portfolio
       ancestorModernCeremony: "TRAN & TAI",
@@ -303,8 +322,8 @@ const resources = {
       otherEventsDesc: "Trang trí các sự kiện đặc biệt theo yêu cầu",
       needEventOrganization: "Cần Tổ Chức Sự Kiện?",
       contactForQuote: "Liên hệ với chúng tôi để được tư vấn và báo giá chi tiết",
-      eventCTATitle:"Bạn Cần Tổ Chức Sự Kiện?",
-      eventCTASubTitle:"Liên hệ với chúng tôi để được tư vấn và báo giá chi tiết",
+      eventCTATitle: "Bạn Cần Tổ Chức Sự Kiện?",
+      eventCTASubTitle: "Liên hệ với chúng tôi để được tư vấn và báo giá chi tiết",
 
       // Portfolio Page
       portfolioHeroTitle1: "We'll create",
@@ -387,6 +406,9 @@ const resources = {
   },
   en: {
     translation: {
+      // Language
+      currentLang: "en",
+      
       // Header
       hotline: "Hotline",
 
@@ -397,6 +419,20 @@ const resources = {
       blog: "BLOG",
       about: "ABOUT US",
       contact: "CONTACT",
+
+      // Blog Categories
+      allCategories: "All",
+      camNang: "HANDBOOK",
+      realLifeWedding: "Real-life Wedding",
+      tuVanDamCuoi: "WEDDING CONSULTATION",
+      cuoiTruyen: "Traditional Wedding",
+      dichVuKhac: "OTHER SERVICES",
+      
+      // Blog Actions
+      readMore: "Read more",
+      backToBlogList: "Back to blog list",
+      relatedPosts: "Related Posts",
+      categories: "CATEGORIES",
 
       // Services Dropdown
       destinationWedding: "Outdoor Destination Wedding",
@@ -455,7 +491,7 @@ const resources = {
       followAnt: "FOLLOW ANT",
       followers: "followers",
       followPage: "Follow Page",
-      share: "Share",
+      share: "Send Message",
       tagline: "Ant Wedding – Draw Your Wedding Dream",
       footerNote: "from ANT Wedding with So Much Love",
 
@@ -463,6 +499,7 @@ const resources = {
       officeAddress: "Office & Production:",
       nhatrangAddress: "Ngô Gia Tự Apartment - Nha Trang - Khánh Hòa - Việt Nam",
       makeAppointment: "(Please make an appointment in advance)",
+      mapAddress: "See Location",
       contactInfo: "Contact:",
       consultant: "Service Consultant:",
       workingHours: "Working Hours:",
@@ -534,6 +571,7 @@ const resources = {
       letUsJoinYou: "Let Us Join You",
       contactForPlanning: "Contact us now for consultation and planning for your special day",
       sendConsultationRequest: "Send Consultation Request",
+      consultationFormLink: "https://docs.google.com/forms/d/e/1FAIpQLSe-Ul7RdruUD_MU6Hrir1HzaDoabAhj1tc8IKnAXLFKjqaeSg/viewform",
 
       // Service Detail Pages - Common
       aboutService: "About Service",
@@ -596,19 +634,19 @@ const resources = {
       ancestorCompletionDesc: "Final inspection and handover — ensuring every detail is in place for the big day.",
 
       //Ancestor Benefit
-      ancestorBenefitTitle:"Le Gia Tien – A Timeless Vietnamese Wedding Tradition",
-      ancestorBenefitTitle1:"Expressing Gratitude & Respect",
-      ancestorBenefitSubTitle1:"The Le Gia Tien (Ancestral Ceremony) is a sacred moment for the couple to offer incense and pay respect to their ancestors — those who gave life, guidance, and blessings. It embodies filial piety and honors one of the most beautiful traditions in Vietnamese family culture.",
-      ancestorBenefitTitle2:"Introducing The Couple",
-       ancestorBenefitSubTitle2:"This ceremony marks the official union of two families, where the bride and groom are formally introduced to each side. It represents the bond, respect, and shared joy between both families as they welcome a new beginning together.",
-      ancestorBenefitTitle3:"Blessing For Happiness & Harmony",
-       ancestorBenefitSubTitle3:"Beyond ritual, the Le Gia Tien carries heartfelt wishes for the couple’s marriage — a life filled with love, peace, and prosperity, under the blessings and protection of their ancestors.",
-      ancestorBenefitTitle4:"Preserving & Continuing",
-       ancestorBenefitSubTitle4:"In a modern world, this ceremony connects the past with the present — allowing younger generations to honor, cherish, and continue the timeless beauty of Vietnamese traditions on their wedding day.",
+      ancestorBenefitTitle: "Le Gia Tien – A Timeless Vietnamese Wedding Tradition",
+      ancestorBenefitTitle1: "Expressing Gratitude & Respect",
+      ancestorBenefitSubTitle1: "The Le Gia Tien (Ancestral Ceremony) is a sacred moment for the couple to offer incense and pay respect to their ancestors — those who gave life, guidance, and blessings. It embodies filial piety and honors one of the most beautiful traditions in Vietnamese family culture.",
+      ancestorBenefitTitle2: "Introducing The Couple",
+      ancestorBenefitSubTitle2: "This ceremony marks the official union of two families, where the bride and groom are formally introduced to each side. It represents the bond, respect, and shared joy between both families as they welcome a new beginning together.",
+      ancestorBenefitTitle3: "Blessing For Happiness & Harmony",
+      ancestorBenefitSubTitle3: "Beyond ritual, the Le Gia Tien carries heartfelt wishes for the couple’s marriage — a life filled with love, peace, and prosperity, under the blessings and protection of their ancestors.",
+      ancestorBenefitTitle4: "Preserving & Continuing",
+      ancestorBenefitSubTitle4: "In a modern world, this ceremony connects the past with the present — allowing younger generations to honor, cherish, and continue the timeless beauty of Vietnamese traditions on their wedding day.",
 
-       // Ancestor CTA
+      // Ancestor CTA
       ancestorCTATitle: "Planning A Traditional Ceremony?",
-      ancestorCTASubTitle: "Reach out to us for personalized advice on customs and preparation details.",      
+      ancestorCTASubTitle: "Reach out to us for personalized advice on customs and preparation details.",
 
       // Ancestor Portfolio
       ancestorModernCeremony: "TRAN & TAI",
@@ -688,8 +726,8 @@ const resources = {
       otherEventsDesc: "Bespoke styling for any special occasion.",
       needEventOrganization: "Need Event Organization?",
       contactForQuote: "Contact us for consultation and detailed quote",
-      eventCTATitle:"Looking to Host a Memorable Event?",
-      eventCTASubTitle:"Contact us today for tailored consultation.",
+      eventCTATitle: "Looking to Host a Memorable Event?",
+      eventCTASubTitle: "Contact us today for tailored consultation.",
 
       // Portfolio Page
       portfolioHeroTitle1: "We'll create",

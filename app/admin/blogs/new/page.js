@@ -32,11 +32,11 @@ export default function NewBlog() {
 
   const [formData, setFormData] = useState({
     slug: '',
-    title: '',
+    title: { vi: '', en: '' },
     author: 'Ant Wedding',
     category: 'cam-nang',
-    excerpt: '',
-    content: '<p>Nội dung sẽ được thêm vào sau...</p>',
+    excerpt: { vi: '', en: '' },
+    content: { vi: '<p>Nội dung sẽ được thêm vào sau...</p>', en: '<p>Content will be added later...</p>' },
     thumbnailImage: '',
     headerImage: '',
     tags: [],
@@ -176,51 +176,81 @@ export default function NewBlog() {
               </div>
             </div>
 
-            {/* Title & Excerpt */}
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Title *</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
-                  value={formData.title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    setFormData({ 
-                      ...formData, 
-                      title: newTitle,
-                      slug: generateSlug(newTitle)
-                    });
-                  }}
-                  placeholder="10 Xu Hướng Trang Trí Tiệc Cưới 2024"
-                />
+            {/* Title - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Tiêu Đề (Title)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Tiếng Việt *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.title.vi}
+                    onChange={(e) => {
+                      const newTitle = e.target.value;
+                      setFormData({ 
+                        ...formData, 
+                        title: { ...formData.title, vi: newTitle },
+                        slug: generateSlug(newTitle)
+                      });
+                    }}
+                    placeholder="10 Xu Hướng Trang Trí Tiệc Cưới 2024"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">English *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.title.en}
+                    onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
+                    placeholder="10 Wedding Decoration Trends 2024"
+                  />
+                </div>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Mô tả ngắn (Excerpt) *
-                </label>
-                <textarea
-                  required
-                  rows={3}
-                  maxLength={300}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
-                  value={formData.excerpt}
-                  onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                  placeholder="Mô tả ngắn gọn về bài viết, hiển thị trong danh sách blog (tối đa 300 ký tự)"
-                />
-                <div className="mt-2 flex items-start space-x-2">
-                  <svg className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                  </svg>
-                  <div className="flex-1">
-                    <p className="text-xs text-gray-600">
-                      <strong>Excerpt</strong> là đoạn mô tả ngắn hiển thị trong blog card (danh sách blog).
-                      Nên viết ngắn gọn, hấp dẫn để thu hút người đọc click vào.
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">{formData.excerpt.length}/300 ký tự</p>
-                  </div>
+            {/* Excerpt - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                Mô Tả Ngắn (Excerpt)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Tiếng Việt *</label>
+                  <textarea
+                    required
+                    rows={3}
+                    maxLength={300}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
+                    value={formData.excerpt.vi}
+                    onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, vi: e.target.value } })}
+                    placeholder="Mô tả ngắn gọn về bài viết..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">{formData.excerpt.vi.length}/300 ký tự</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">English *</label>
+                  <textarea
+                    required
+                    rows={3}
+                    maxLength={300}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
+                    value={formData.excerpt.en}
+                    onChange={(e) => setFormData({ ...formData, excerpt: { ...formData.excerpt, en: e.target.value } })}
+                    placeholder="Short description of the article..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">{formData.excerpt.en.length}/300 characters</p>
                 </div>
               </div>
             </div>

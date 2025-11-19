@@ -180,35 +180,99 @@ export default function EditBlog() {
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Title *</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700"
-                  value={formData.title}
-                  onChange={(e) => {
-                    const newTitle = e.target.value;
-                    setFormData({ 
+            {/* Title - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Tiêu Đề (Title)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Tiếng Việt *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700"
+                    value={typeof formData.title === 'object' ? formData.title.vi : formData.title}
+                    onChange={(e) => {
+                      const newTitle = e.target.value;
+                      setFormData({ 
+                        ...formData, 
+                        title: typeof formData.title === 'object' 
+                          ? { ...formData.title, vi: newTitle }
+                          : { vi: newTitle, en: '' },
+                        slug: generateSlug(newTitle)
+                      });
+                    }}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">English *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700"
+                    value={typeof formData.title === 'object' ? formData.title.en : ''}
+                    onChange={(e) => setFormData({ 
                       ...formData, 
-                      title: newTitle,
-                      slug: generateSlug(newTitle)
-                    });
-                  }}
-                />
+                      title: typeof formData.title === 'object' 
+                        ? { ...formData.title, en: e.target.value }
+                        : { vi: formData.title, en: e.target.value }
+                    })}
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Excerpt *</label>
-                <textarea
-                  required
-                  rows={3}
-                  maxLength={300}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 resize-none"
-                  value={formData.excerpt}
-                  onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                />
-                <p className="mt-1 text-xs text-gray-500">{formData.excerpt.length}/300 ký tự</p>
+            </div>
+
+            {/* Excerpt - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                Mô Tả Ngắn (Excerpt)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Tiếng Việt *</label>
+                  <textarea
+                    required
+                    rows={3}
+                    maxLength={300}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 resize-none"
+                    value={typeof formData.excerpt === 'object' ? formData.excerpt.vi : formData.excerpt}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      excerpt: typeof formData.excerpt === 'object' 
+                        ? { ...formData.excerpt, vi: e.target.value }
+                        : { vi: e.target.value, en: '' }
+                    })}
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {(typeof formData.excerpt === 'object' ? formData.excerpt.vi : formData.excerpt).length}/300 ký tự
+                  </p>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">English *</label>
+                  <textarea
+                    required
+                    rows={3}
+                    maxLength={300}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 resize-none"
+                    value={typeof formData.excerpt === 'object' ? formData.excerpt.en : ''}
+                    onChange={(e) => setFormData({ 
+                      ...formData, 
+                      excerpt: typeof formData.excerpt === 'object' 
+                        ? { ...formData.excerpt, en: e.target.value }
+                        : { vi: formData.excerpt, en: e.target.value }
+                    })}
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    {(typeof formData.excerpt === 'object' ? formData.excerpt.en : '').length}/300 characters
+                  </p>
+                </div>
               </div>
             </div>
 

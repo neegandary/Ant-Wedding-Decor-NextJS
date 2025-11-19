@@ -27,14 +27,14 @@ export default function NewPortfolio() {
   const [toast, setToast] = useState(null);
   const [formData, setFormData] = useState({
     slug: '',
-    title: '',
-    subtitle: '',
+    title: { vi: '', en: '' },
+    subtitle: { vi: '', en: '' },
     author: 'Ant Wedding',
     category: 'weddingDecor',
     date: { day: '', month: 'TH1', year: new Date().getFullYear().toString() },
     thumbnailImage: '',
     headerImage: '',
-    description: '',
+    description: { vi: '', en: '' },
     details: { concept: '', address: 'Nha Trang', photographer: 'Ant Wedding Studio' },
     contact: { hotline: '079 467 2928', email: 'antwedding79@gmail.com' },
     tags: [],
@@ -194,29 +194,77 @@ export default function NewPortfolio() {
               </div>
             </div>
 
-            {/* Title Section */}
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Title *</label>
-                <input
-                  type="text"
-                  required
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="FOUND BY FATE"
-                />
+            {/* Title Section - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Tiêu Đề (Title)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Tiếng Việt *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.title.vi}
+                    onChange={(e) => setFormData({ ...formData, title: { ...formData.title, vi: e.target.value } })}
+                    placeholder="ĐỊNH MỆNH TÌM THẤY NHAU"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    English *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.title.en}
+                    onChange={(e) => setFormData({ ...formData, title: { ...formData.title, en: e.target.value } })}
+                    placeholder="FOUND BY FATE"
+                  />
+                </div>
               </div>
+            </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Subtitle</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
-                  value={formData.subtitle}
-                  onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                  placeholder="Nathan & Tracy - Định Mệnh Tìm Thấy Nhau"
-                />
+            {/* Subtitle Section - Bilingual */}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                Phụ Đề (Subtitle)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Tiếng Việt
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.subtitle.vi}
+                    onChange={(e) => setFormData({ ...formData, subtitle: { ...formData.subtitle, vi: e.target.value } })}
+                    placeholder="Nathan & Tracy - Định Mệnh Tìm Thấy Nhau"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    English
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all"
+                    value={formData.subtitle.en}
+                    onChange={(e) => setFormData({ ...formData, subtitle: { ...formData.subtitle, en: e.target.value } })}
+                    placeholder="Nathan & Tracy - A Destined Love Story"
+                  />
+                </div>
               </div>
             </div>
 
@@ -285,22 +333,42 @@ export default function NewPortfolio() {
               </div>
             </div>
 
-            {/* Description Section */}
+            {/* Description Section - Bilingual */}
             <div>
               <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                 <svg className="w-5 h-5 mr-2 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
                 </svg>
-                Mô Tả
+                Mô Tả (Description)
               </h3>
-              <textarea
-                required
-                rows={8}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Mô tả chi tiết về portfolio..."
-              />
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Tiếng Việt *
+                  </label>
+                  <textarea
+                    required
+                    rows={8}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
+                    value={formData.description.vi}
+                    onChange={(e) => setFormData({ ...formData, description: { ...formData.description, vi: e.target.value } })}
+                    placeholder="Mô tả chi tiết về portfolio bằng tiếng Việt..."
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    English *
+                  </label>
+                  <textarea
+                    required
+                    rows={8}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 focus:border-transparent transition-all resize-none"
+                    value={formData.description.en}
+                    onChange={(e) => setFormData({ ...formData, description: { ...formData.description, en: e.target.value } })}
+                    placeholder="Detailed description of the portfolio in English..."
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Settings Section */}
