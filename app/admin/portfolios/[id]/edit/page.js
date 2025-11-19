@@ -49,30 +49,30 @@ export default function EditPortfolio() {
   const processImage = async (file, maxSizeMB = 5, quality = 0.85, maxWidth = 1920) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      
+
       reader.onload = (e) => {
         const img = new Image();
-        
+
         img.onload = () => {
           const originalSizeMB = (file.size / (1024 * 1024)).toFixed(2);
           console.log(`📸 Ảnh gốc: ${img.width}x${img.height}, ${originalSizeMB}MB`);
-          
+
           let width = img.width;
           let height = img.height;
-          
+
           if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
             width = maxWidth;
             console.log(`🔄 Resize xuống: ${width}x${height}`);
           }
-          
+
           const canvas = document.createElement('canvas');
           canvas.width = width;
           canvas.height = height;
-          
+
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
-          
+
           const tryCompress = (targetQuality, attempt = 1) => {
             canvas.toBlob(
               (blob) => {
@@ -80,10 +80,10 @@ export default function EditPortfolio() {
                   reject(new Error('Không thể xử lý ảnh'));
                   return;
                 }
-                
+
                 const sizeMB = blob.size / (1024 * 1024);
                 console.log(`🔧 Lần thử ${attempt}: quality=${targetQuality.toFixed(2)}, size=${sizeMB.toFixed(2)}MB`);
-                
+
                 if (sizeMB > maxSizeMB && targetQuality > 0.3) {
                   const newQuality = Math.max(0.3, targetQuality * (maxSizeMB / sizeMB) * 0.85);
                   tryCompress(newQuality, attempt + 1);
@@ -98,14 +98,14 @@ export default function EditPortfolio() {
               targetQuality
             );
           };
-          
+
           tryCompress(quality);
         };
-        
+
         img.onerror = () => reject(new Error('Không thể đọc ảnh'));
         img.src = e.target.result;
       };
-      
+
       reader.onerror = () => reject(new Error('Không thể đọc file'));
       reader.readAsDataURL(file);
     });
@@ -118,10 +118,10 @@ export default function EditPortfolio() {
     setUploading(true);
     try {
       console.log(`🚀 Bắt đầu xử lý: ${file.name}`);
-      
+
       // Xử lý ảnh trước khi upload
       const processedFile = await processImage(file);
-      
+
       const uploadFormData = new FormData();
       uploadFormData.append('file', processedFile);
       uploadFormData.append('portfolioId', portfolioId);
@@ -133,7 +133,7 @@ export default function EditPortfolio() {
       });
 
       const data = await res.json();
-      
+
       if (res.ok) {
         if (type === 'thumbnail') {
           setFormData(prev => ({ ...prev, thumbnailImage: data.url }));
@@ -159,10 +159,10 @@ export default function EditPortfolio() {
     try {
       const uploadPromises = files.map(async (file) => {
         console.log(`🚀 Bắt đầu xử lý gallery: ${file.name}`);
-        
+
         // Xử lý ảnh trước khi upload
         const processedFile = await processImage(file);
-        
+
         const uploadFormData = new FormData();
         uploadFormData.append('file', processedFile);
         uploadFormData.append('portfolioId', portfolioId);
@@ -178,7 +178,7 @@ export default function EditPortfolio() {
       });
 
       const urls = await Promise.all(uploadPromises);
-      
+
       setFormData(prev => ({
         ...prev,
         images: [
@@ -304,31 +304,92 @@ export default function EditPortfolio() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
-              <input
-                type="text"
-                required
-                className="w-full px-3 py-2 border rounded"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              />
+            {/* Title - Bilingual */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Tiêu Đề (Title)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Tiếng Việt *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.title === 'object' ? formData.title.vi : formData.title}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      title: typeof formData.title === 'object'
+                        ? { ...formData.title, vi: e.target.value }
+                        : { vi: e.target.value, en: '' }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">English *</label>
+                  <input
+                    type="text"
+                    required
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.title === 'object' ? formData.title.en : ''}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      title: typeof formData.title === 'object'
+                        ? { ...formData.title, en: e.target.value }
+                        : { vi: formData.title, en: e.target.value }
+                    })}
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
-              <input
-                type="text"
-                className="w-full px-3 py-2 border rounded"
-                value={formData.subtitle}
-                onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-              />
+            {/* Subtitle - Bilingual */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                Phụ Đề (Subtitle)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Tiếng Việt</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.subtitle === 'object' ? formData.subtitle.vi : formData.subtitle || ''}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      subtitle: typeof formData.subtitle === 'object'
+                        ? { ...formData.subtitle, vi: e.target.value }
+                        : { vi: e.target.value, en: '' }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">English</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.subtitle === 'object' ? formData.subtitle.en : ''}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      subtitle: typeof formData.subtitle === 'object'
+                        ? { ...formData.subtitle, en: e.target.value }
+                        : { vi: formData.subtitle || '', en: e.target.value }
+                    })}
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Images Upload */}
             <div className="border-t pt-6">
               <h3 className="text-lg font-semibold mb-4">Ảnh</h3>
-              
+
               {/* Thumbnail */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail Image *</label>
@@ -367,7 +428,7 @@ export default function EditPortfolio() {
                   onChange={handleGalleryUpload}
                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 mb-4"
                 />
-                
+
                 <div className="grid grid-cols-4 gap-4">
                   {formData.images?.map((image, index) => (
                     <div key={index} className="relative group">
@@ -389,15 +450,46 @@ export default function EditPortfolio() {
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
-              <textarea
-                required
-                rows={6}
-                className="w-full px-3 py-2 border rounded"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              />
+            {/* Description - Bilingual */}
+            <div className="border-t pt-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+                Mô Tả (Description)
+              </h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Tiếng Việt *</label>
+                  <textarea
+                    required
+                    rows={6}
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.description === 'object' ? formData.description.vi : formData.description}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      description: typeof formData.description === 'object'
+                        ? { ...formData.description, vi: e.target.value }
+                        : { vi: e.target.value, en: '' }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">English *</label>
+                  <textarea
+                    required
+                    rows={6}
+                    className="w-full px-3 py-2 border rounded"
+                    value={typeof formData.description === 'object' ? formData.description.en : ''}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      description: typeof formData.description === 'object'
+                        ? { ...formData.description, en: e.target.value }
+                        : { vi: formData.description, en: e.target.value }
+                    })}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-end space-x-4">

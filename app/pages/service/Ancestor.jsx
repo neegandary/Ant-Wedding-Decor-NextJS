@@ -359,7 +359,9 @@ export const Ancestor = () => {
                             Hotline: 079 467 2928
                         </a>
                         <a
-                            href="/contact"
+                            href={t('consultationFormLink')}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="bg-white text-[#806a56] border-2 border-[#cbb9a4] px-8 py-3 rounded-lg hover:bg-[#cbb9a4] hover:text-white transition-colors font-semibold inline-flex items-center justify-center gap-2"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

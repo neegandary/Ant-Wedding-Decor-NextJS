@@ -97,7 +97,7 @@ export const Header = () => {
                     {/* Center: logo */}
                     <div className="flex justify-center">
                         <Link href="/">
-                            <Image src={IMAGES.logo_rmbg} alt="Company logo" width={96} height={96} priority className="h-20 w-20 lg:h-24 lg:w-24" />
+                            <Image src={IMAGES.logo_rmbg} alt="Company logo" width={128} height={128} priority className="h-28 w-28 lg:h-32 lg:w-32" />
                         </Link>
                     </div>
 

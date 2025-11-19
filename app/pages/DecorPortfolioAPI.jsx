@@ -110,7 +110,7 @@ const DecorPortfolioAPI = () => {
                 <div className="relative overflow-hidden h-80">
                   <Image
                     src={item.thumbnailImage}
-                    alt={item.title}
+                    alt={typeof item.title === 'object' ? item.title.vi || item.title.en : item.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -132,13 +132,13 @@ const DecorPortfolioAPI = () => {
 
                   {/* Title */}
                   <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-orange-400 transition-colors duration-300">
-                    {item.title}
+                    {typeof item.title === 'object' ? item.title[t('currentLang') || 'vi'] || item.title.vi : item.title}
                   </h3>
 
                   {/* Description */}
                   {item.subtitle && (
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {item.subtitle}
+                      {typeof item.subtitle === 'object' ? item.subtitle[t('currentLang') || 'vi'] || item.subtitle.vi : item.subtitle}
                     </p>
                   )}
 

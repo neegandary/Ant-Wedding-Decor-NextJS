@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Heart, Lightbulb, HeartHandshake, Palette } from 'lucide-react';
@@ -8,6 +9,21 @@ import { CountUpNumber } from '../components/CountUpNumber';
 
 const AboutUs = () => {
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className="bg-gray-50 min-h-screen">
+        <div className="relative h-[500px] bg-gray-200 animate-pulse">
+          <div className="absolute inset-0 bg-black/40"></div>
+        </div>
+      </div>
+    );
+  }
 
   const teamImages = [
     IMAGES.antweddingteam2,
@@ -253,7 +269,9 @@ const AboutUs = () => {
               {t('hotline')}: 079 467 2928
             </a>
             <a
-              href="/contact"
+              href={t('consultationFormLink')}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-white text-[#806a56] border-2 border-[#cbb9a4] px-8 py-3 rounded-lg hover:bg-[#cbb9a4] hover:text-white transition-colors font-semibold inline-flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

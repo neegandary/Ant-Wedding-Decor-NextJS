@@ -117,7 +117,7 @@ export const Footer = () => {
                             <div className="text-gray-600 text-xs mb-3">2,2K {t('followers')}</div>
                             <div className="flex gap-2">
                                 <a
-                                    href="https://www.facebook.com/messages/t/253902898888127"
+                                    href="https://www.facebook.com/antweddingteam"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex-1 bg-blue-600 text-white text-xs py-2 rounded hover:bg-blue-700 transition text-center"
@@ -130,7 +130,7 @@ export const Footer = () => {
                                     </span>
                                 </a>
                                 <button className="flex-1 bg-gray-200 text-gray-800 text-xs py-2 rounded hover:bg-gray-300 transition">
-                                    {t('share')}
+                                    <a href="https://www.facebook.com/messages/t/253902898888127" target="_blank" rel="noopener noreferrer">{t('share')}</a>
                                 </button>
                             </div>
                         </div>

@@ -217,7 +217,9 @@ export default function BlogsList() {
                         )}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm font-semibold text-gray-900">{blog.title}</div>
+                        <div className="text-sm font-semibold text-gray-900">
+                          {typeof blog.title === 'object' ? blog.title.vi || blog.title.en : blog.title}
+                        </div>
                         <div className="text-xs text-gray-500 mt-1 font-mono">{blog.slug}</div>
                       </td>
                       <td className="px-6 py-4">
@@ -249,7 +251,7 @@ export default function BlogsList() {
                             Edit
                           </Link>
                           <button
-                            onClick={() => handleDeleteClick(blog._id, blog.title)}
+                            onClick={() => handleDeleteClick(blog._id, typeof blog.title === 'object' ? blog.title.vi || blog.title.en : blog.title)}
                             className="inline-flex items-center px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
                           >
                             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
