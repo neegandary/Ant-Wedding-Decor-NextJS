@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 
 export default function BlogList() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('');
@@ -137,7 +137,7 @@ export default function BlogList() {
                         {blog.thumbnailImage ? (
                           <Image
                             src={blog.thumbnailImage}
-                            alt={typeof blog.title === 'object' ? blog.title[t('currentLang') || 'vi'] || blog.title.vi : blog.title}
+                            alt={typeof blog.title === 'object' ? blog.title[i18n.language] || blog.title.vi : blog.title}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-300"
                           />
@@ -171,10 +171,10 @@ export default function BlogList() {
                           </div>
                         </div>
                         <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-[#cbb9a4] transition-colors line-clamp-2 leading-snug">
-                          {typeof blog.title === 'object' ? blog.title[t('currentLang') || 'vi'] || blog.title.vi : blog.title}
+                          {typeof blog.title === 'object' ? blog.title[i18n.language] || blog.title.vi : blog.title}
                         </h3>
                         <p className="text-gray-600 text-sm line-clamp-2 mb-4 leading-relaxed">
-                          {typeof blog.excerpt === 'object' ? blog.excerpt[t('currentLang') || 'vi'] || blog.excerpt.vi : blog.excerpt}
+                          {typeof blog.excerpt === 'object' ? blog.excerpt[i18n.language] || blog.excerpt.vi : blog.excerpt}
                         </p>
                         <div className="flex items-center text-[#cbb9a4] font-semibold text-sm pt-2 border-t border-gray-100">
                           <span>{t('readMore')}</span>

@@ -41,6 +41,7 @@ const Introduce = () => {
                             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-medium text-gray-900 leading-tight mb-4 sm:mb-6 whitespace-pre">
                                 <span className="block">{t('introTitle2')}</span>
                                 <span className="block">{t('introTitle1')}</span>
+                                <span className="block">{t('introTitle3')}</span>
                             </h2>
                             <p className="text-gray-600 leading-relaxed text-base sm:text-lg text-justify font-light whitespace-pre-line">
                                 {t('introDesc')}

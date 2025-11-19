@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 const PortfolioDetailAPI = ({ params }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const slug = params?.slug;
   const router = useRouter();
   const [portfolio, setPortfolio] = useState(null);
@@ -186,7 +186,7 @@ const PortfolioDetailAPI = ({ params }) => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-wider px-4 text-center"
         >
-          {typeof portfolio.title === 'object' ? portfolio.title[t('currentLang') || 'vi'] || portfolio.title.vi : portfolio.title}
+          {typeof portfolio.title === 'object' ? portfolio.title[i18n.language] || portfolio.title.vi : portfolio.title}
         </motion.h1>
       </div>
 
@@ -199,14 +199,14 @@ const PortfolioDetailAPI = ({ params }) => {
             className="lg:col-span-1 bg-white rounded-lg shadow-md p-5 sm:p-6 lg:p-8"
           >
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-              {typeof portfolio.title === 'object' ? portfolio.title[t('currentLang') || 'vi'] || portfolio.title.vi : portfolio.title}
+              {typeof portfolio.title === 'object' ? portfolio.title[i18n.language] || portfolio.title.vi : portfolio.title}
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
-              {typeof portfolio.subtitle === 'object' ? portfolio.subtitle[t('currentLang') || 'vi'] || portfolio.subtitle.vi : portfolio.subtitle}
+              {typeof portfolio.subtitle === 'object' ? portfolio.subtitle[i18n.language] || portfolio.subtitle.vi : portfolio.subtitle}
             </p>
 
             <div className="text-gray-700 text-sm sm:text-base leading-relaxed whitespace-pre-line">
-              {typeof portfolio.description === 'object' ? portfolio.description[t('currentLang') || 'vi'] || portfolio.description.vi : portfolio.description}
+              {typeof portfolio.description === 'object' ? portfolio.description[i18n.language] || portfolio.description.vi : portfolio.description}
             </div>
           </aside>
 
@@ -221,7 +221,7 @@ const PortfolioDetailAPI = ({ params }) => {
                 >
                   <img
                     src={image.src}
-                    alt={`${portfolio.title} - ${index + 1}`}
+                    alt={`${typeof portfolio.title === 'object' ? portfolio.title[i18n.language] || portfolio.title.vi : portfolio.title} - ${index + 1}`}
                     className="w-full h-auto object-contain group-hover:opacity-95 transition-opacity duration-300"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center pointer-events-none">
@@ -250,7 +250,7 @@ const PortfolioDetailAPI = ({ params }) => {
               <div className="text-left">
                 <div className="text-xs text-gray-400 uppercase">{t('newer')}</div>
                 <div className="text-sm font-medium line-clamp-1">
-                  {prevPortfolio?.title || t('noPrevious')}
+                  {prevPortfolio ? (typeof prevPortfolio.title === 'object' ? prevPortfolio.title[i18n.language] || prevPortfolio.title.vi : prevPortfolio.title) : t('noPrevious')}
                 </div>
               </div>
             </button>
@@ -273,7 +273,7 @@ const PortfolioDetailAPI = ({ params }) => {
               <div className="text-right">
                 <div className="text-xs text-gray-400 uppercase">{t('older')}</div>
                 <div className="text-sm font-medium line-clamp-1">
-                  {nextPortfolio?.title || t('noNext')}
+                  {nextPortfolio ? (typeof nextPortfolio.title === 'object' ? nextPortfolio.title[i18n.language] || nextPortfolio.title.vi : nextPortfolio.title) : t('noNext')}
                 </div>
               </div>
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -313,7 +313,7 @@ const PortfolioDetailAPI = ({ params }) => {
           <div className="relative max-w-full sm:max-w-7xl max-h-[90vh] mx-auto px-12 sm:px-16">
             <img
               src={portfolio.images[currentImageIndex]?.src}
-              alt={`${portfolio.title} - ${currentImageIndex + 1}`}
+              alt={`${typeof portfolio.title === 'object' ? portfolio.title[i18n.language] || portfolio.title.vi : portfolio.title} - ${currentImageIndex + 1}`}
               className="max-w-full max-h-[90vh] object-contain"
             />
           </div>

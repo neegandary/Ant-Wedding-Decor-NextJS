@@ -14,7 +14,7 @@ const BlogRenderer = dynamic(
 );
 
 export default function BlogDetail() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const params = useParams();
   const [blog, setBlog] = useState(null);
   const [relatedBlogs, setRelatedBlogs] = useState([]);
@@ -157,7 +157,7 @@ export default function BlogDetail() {
 
               {/* Title */}
               <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 text-center">
-                {typeof blog.title === 'object' ? blog.title[t('currentLang') || 'vi'] || blog.title.vi : blog.title}
+                {typeof blog.title === 'object' ? blog.title[i18n.language] || blog.title.vi : blog.title}
               </h1>
 
               {/* Meta Info */}
@@ -186,7 +186,7 @@ export default function BlogDetail() {
               ) : (
                 <div
                   className="blog-content mb-8"
-                  dangerouslySetInnerHTML={{ __html: typeof blog.content === 'object' ? blog.content[t('currentLang') || 'vi'] || blog.content.vi : blog.content }}
+                  dangerouslySetInnerHTML={{ __html: typeof blog.content === 'object' ? blog.content[i18n.language] || blog.content.vi : blog.content }}
                 />
               )}
 
@@ -228,7 +228,7 @@ export default function BlogDetail() {
                               {relatedBlog.thumbnailImage ? (
                                 <Image
                                   src={relatedBlog.thumbnailImage}
-                                  alt={typeof relatedBlog.title === 'object' ? relatedBlog.title[t('currentLang') || 'vi'] || relatedBlog.title.vi : relatedBlog.title}
+                                  alt={typeof relatedBlog.title === 'object' ? relatedBlog.title[i18n.language] || relatedBlog.title.vi : relatedBlog.title}
                                   fill
                                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                                 />
@@ -259,13 +259,13 @@ export default function BlogDetail() {
 
                               {/* Title */}
                               <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-orange-400 transition-colors duration-300">
-                                {typeof relatedBlog.title === 'object' ? relatedBlog.title[t('currentLang') || 'vi'] || relatedBlog.title.vi : relatedBlog.title}
+                                {typeof relatedBlog.title === 'object' ? relatedBlog.title[i18n.language] || relatedBlog.title.vi : relatedBlog.title}
                               </h3>
 
                               {/* Description */}
                               {relatedBlog.excerpt && (
                                 <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                                  {typeof relatedBlog.excerpt === 'object' ? relatedBlog.excerpt[t('currentLang') || 'vi'] || relatedBlog.excerpt.vi : relatedBlog.excerpt}
+                                  {typeof relatedBlog.excerpt === 'object' ? relatedBlog.excerpt[i18n.language] || relatedBlog.excerpt.vi : relatedBlog.excerpt}
                                 </p>
                               )}
 

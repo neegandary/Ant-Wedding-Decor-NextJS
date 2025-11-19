@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const DecorPortfolioAPI = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const [portfolios, setPortfolios] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -132,13 +132,13 @@ const DecorPortfolioAPI = () => {
 
                   {/* Title */}
                   <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-orange-400 transition-colors duration-300">
-                    {typeof item.title === 'object' ? item.title[t('currentLang') || 'vi'] || item.title.vi : item.title}
+                    {typeof item.title === 'object' ? item.title[i18n.language] || item.title.vi : item.title}
                   </h3>
 
                   {/* Description */}
                   {item.subtitle && (
                     <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                      {typeof item.subtitle === 'object' ? item.subtitle[t('currentLang') || 'vi'] || item.subtitle.vi : item.subtitle}
+                      {typeof item.subtitle === 'object' ? item.subtitle[i18n.language] || item.subtitle.vi : item.subtitle}
                     </p>
                   )}
 
