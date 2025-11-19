@@ -4,8 +4,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { X, Upload, Plus } from 'lucide-react';
+import NextImage from 'next/image';
+import { X } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const Toast = dynamic(() => import('@/app/components/Toast'), {
@@ -393,9 +393,19 @@ export default function EditPortfolio() {
               {/* Thumbnail */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Thumbnail Image *</label>
-                {formData.thumbnailImage && (
-                  <Image src={formData.thumbnailImage} alt="Thumbnail" width={128} height={128} className="w-32 h-32 object-cover rounded mb-2" />
-                )}
+                {formData.thumbnailImage ? (
+                  <div className="relative inline-block mb-2">
+                    <NextImage src={formData.thumbnailImage} alt="Thumbnail" width={128} height={128} className="w-32 h-32 object-cover rounded" />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, thumbnailImage: '' })}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 shadow-lg"
+                      title="Xóa ảnh"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : null}
                 <input
                   type="file"
                   accept="image/*"
@@ -407,9 +417,19 @@ export default function EditPortfolio() {
               {/* Header */}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Header Image *</label>
-                {formData.headerImage && (
-                  <Image src={formData.headerImage} alt="Header" width={256} height={128} className="w-64 h-32 object-cover rounded mb-2" />
-                )}
+                {formData.headerImage ? (
+                  <div className="relative inline-block mb-2">
+                    <NextImage src={formData.headerImage} alt="Header" width={256} height={128} className="w-64 h-32 object-cover rounded" />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, headerImage: '' })}
+                      className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1.5 hover:bg-red-600 shadow-lg"
+                      title="Xóa ảnh"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : null}
                 <input
                   type="file"
                   accept="image/*"
@@ -432,7 +452,7 @@ export default function EditPortfolio() {
                 <div className="grid grid-cols-4 gap-4">
                   {formData.images?.map((image, index) => (
                     <div key={index} className="relative group">
-                      <Image src={image.src} alt="" width={300} height={128} className="w-full h-32 object-cover rounded" />
+                      <NextImage src={image.src} alt="" width={300} height={128} className="w-full h-32 object-cover rounded" />
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
