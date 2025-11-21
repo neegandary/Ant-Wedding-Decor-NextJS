@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Image from 'next/image';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { useRouter } from 'next/navigation';
 import { IMAGES } from '../constants/image';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,6 @@ const Slider = dynamic(() => import('react-slick'), {
 });
 
 const Experience = () => {
-    const router = useRouter();
     const { t } = useTranslation();
     const [isClient, setIsClient] = useState(false);
 
@@ -46,10 +45,6 @@ const Experience = () => {
         { img: `${IMAGES.elopement}`, title: 'ELOPE WEDDING', tags: ['weddingDecor'], endpoint: 'elopement' },
         { img: `${IMAGES.hieuxbrian}`, title: 'WELCOME HOME', tags: ['weddingDecor'], endpoint: 'hieuxbrian' },
     ];
-
-    const handleImageClick = (endpoint) => {
-        router.push(`/portfolio/${endpoint}`);
-    };
 
     const settings = {
         dots: true,
@@ -120,7 +115,7 @@ const Experience = () => {
                     <Slider {...settings}>
                         {row1Images.map((item, idx) => (
                             <div key={`row1-${idx}`} className="px-2">
-                                <div className="relative group overflow-hidden rounded-lg cursor-pointer" onClick={() => handleImageClick(item.endpoint)}>
+                                <Link href={`/portfolio/${item.endpoint}`} className="relative group overflow-hidden rounded-lg block">
                                     <Image
                                         src={item.img}
                                         alt={item.title}
@@ -150,7 +145,7 @@ const Experience = () => {
                                         {/* Title */}
                                         <h3 className="text-base sm:text-xl font-bold text-center">{item.title}</h3>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         ))}
                     </Slider>
@@ -161,7 +156,7 @@ const Experience = () => {
                     <Slider {...settings}>
                         {row2Images.map((item, idx) => (
                             <div key={`row2-${idx}`} className="px-2">
-                                <div className="relative group overflow-hidden rounded-lg cursor-pointer" onClick={() => handleImageClick(item.endpoint)}>
+                                <Link href={`/portfolio/${item.endpoint}`} className="relative group overflow-hidden rounded-lg block">
                                     <Image
                                         src={item.img}
                                         alt={item.title}
@@ -191,7 +186,7 @@ const Experience = () => {
                                         {/* Title */}
                                         <h3 className="text-base sm:text-xl font-bold text-center">{item.title}</h3>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                         ))}
                     </Slider>

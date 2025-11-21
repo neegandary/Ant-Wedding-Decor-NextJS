@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
@@ -147,9 +148,9 @@ export const Destination = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                                onClick={() => router.push(`/portfolio/${image.endpoint}`)}
-                                className="relative h-80 rounded-lg overflow-hidden group cursor-pointer"
+                                className="group"
                             >
+                                <Link href={`/portfolio/${image.endpoint}`} className="relative h-80 rounded-lg overflow-hidden block">
                                 <img
                                     src={image.src}
                                     alt={image.title}
@@ -168,6 +169,7 @@ export const Destination = () => {
                                         </svg>
                                     </div>
                                 </div>
+                                </Link>
                             </motion.div>
                         ))}
                     </div>

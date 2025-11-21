@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
@@ -40,10 +41,6 @@ const DecorPortfolioAPI = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleCardClick = (slug) => {
-    router.push(`/portfolio/${slug}`);
   };
 
   if (loading) {
@@ -101,11 +98,10 @@ const DecorPortfolioAPI = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.3, delay: index * 0.03 }}
-              className="group cursor-pointer"
-              onClick={() => handleCardClick(item.slug)}
+              className="group"
             >
               {/* Card Container */}
-              <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+              <Link href={`/portfolio/${item.slug}`} className="block bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                 {/* Image Section */}
                 <div className="relative overflow-hidden h-80">
                   <Image
@@ -169,11 +165,11 @@ const DecorPortfolioAPI = () => {
                   </div>
 
                   {/* Continue Reading Link */}
-                  <button className="mt-4 text-sm text-gray-500 hover:text-orange-400 uppercase tracking-wider transition-colors">
+                  <span className="mt-4 inline-block text-sm text-gray-500 hover:text-orange-400 uppercase tracking-wider transition-colors">
                     {t('continueReading')}
-                  </button>
+                  </span>
                 </div>
-              </div>
+              </Link>
             </motion.div>
           ))}
         </div>
@@ -196,8 +192,8 @@ const DecorPortfolioAPI = () => {
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
                 className={`px-4 py-2 rounded-lg border transition-colors ${currentPage === 1
-                    ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
+                  ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
                   }`}
               >
                 ← Previous
@@ -219,8 +215,8 @@ const DecorPortfolioAPI = () => {
                         key={page}
                         onClick={() => handlePageChange(page)}
                         className={`w-10 h-10 rounded-lg border transition-colors ${currentPage === page
-                            ? 'bg-[#cbb9a4] border-[#cbb9a4] text-white font-semibold'
-                            : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-[#cbb9a4] hover:text-[#cbb9a4]'
+                          ? 'bg-[#cbb9a4] border-[#cbb9a4] text-white font-semibold'
+                          : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-[#cbb9a4] hover:text-[#cbb9a4]'
                           }`}
                       >
                         {page}
@@ -246,8 +242,8 @@ const DecorPortfolioAPI = () => {
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 className={`px-4 py-2 rounded-lg border transition-colors ${currentPage === totalPages
-                    ? 'border-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
+                  ? 'border-gray-200 text-gray-400 cursor-not-allowed'
+                  : 'border-gray-300 text-gray-700 hover:bg-orange-50 hover:border-orange-400 hover:text-orange-600'
                   }`}
               >
                 Next →
