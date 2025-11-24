@@ -20,11 +20,9 @@ const resources = {
 
       // Blog Categories
       allCategories: "Tất cả",
-      camNang: "CẨM NANG",
-      realLifeWedding: "Real-life Wedding",
-      tuVanDamCuoi: "TƯ VẤN ĐÁM CƯỚI",
-      cuoiTruyen: "Cưới truyền",
-      dichVuKhac: "DỊCH VỤ KHÁC",
+      camNang: "Cẩm Nang Cưới",
+      realLifeWedding: "Đám Cưới Truyền Thống",
+      tuVanDamCuoi: "Tiệc Cưới Ngoài Trời",
       
       // Blog Actions
       readMore: "Đọc thêm",
@@ -422,11 +420,9 @@ const resources = {
 
       // Blog Categories
       allCategories: "All",
-      camNang: "HANDBOOK",
-      realLifeWedding: "Real-life Wedding",
-      tuVanDamCuoi: "WEDDING CONSULTATION",
-      cuoiTruyen: "Traditional Wedding",
-      dichVuKhac: "OTHER SERVICES",
+      camNang: "Wedding Hanbook",
+      realLifeWedding: "Vietnamese Traditional Wedding",
+      tuVanDamCuoi: "Destination Wedding",
       
       // Blog Actions
       readMore: "Read more",

@@ -34,7 +34,7 @@ export default function NewBlog() {
     slug: '',
     title: { vi: '', en: '' },
     author: 'Ant Wedding',
-    category: 'cam-nang',
+    category: 'cam-nang-cuoi',
     excerpt: { vi: '', en: '' },
     content: { vi: '<p>Nội dung sẽ được thêm vào sau...</p>', en: '<p>Content will be added later...</p>' },
     thumbnailImage: '',
@@ -166,11 +166,9 @@ export default function NewBlog() {
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   >
-                    <option value="cam-nang">Cẩm nang</option>
-                    <option value="real-life-wedding">Real-life Wedding</option>
-                    <option value="tu-van-dam-cuoi">Tư vấn đám cưới</option>
-                    <option value="cuoi-truyen">Cưới truyền</option>
-                    <option value="dich-vu-khac">Dịch vụ khác</option>
+                    <option value="cam-nang-cuoi">Cẩm Nang Cưới</option>
+                    <option value="dam-cuoi-truyen-thong">Đám Cưới Truyền Thống</option>
+                    <option value="tiec-cuoi-ngoai-troi">Tiệc Cưới Ngoài Trời</option>
                   </select>
                 </div>
               </div>

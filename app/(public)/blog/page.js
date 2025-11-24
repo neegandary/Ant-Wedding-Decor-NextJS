@@ -90,24 +90,6 @@ export default function BlogList() {
                 >
                   {t('tuVanDamCuoi')}
                 </button>
-                <button
-                  onClick={() => setFilter('cuoi-truyen')}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${filter === 'cuoi-truyen'
-                    ? 'bg-[#cbb9a4] text-white font-medium'
-                    : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                >
-                  {t('cuoiTruyen')}
-                </button>
-                <button
-                  onClick={() => setFilter('dich-vu-khac')}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${filter === 'dich-vu-khac'
-                    ? 'bg-[#cbb9a4] text-white font-medium'
-                    : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                >
-                  {t('dichVuKhac')}
-                </button>
               </nav>
             </div>
           </aside>

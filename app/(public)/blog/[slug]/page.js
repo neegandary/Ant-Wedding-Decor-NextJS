@@ -119,24 +119,6 @@ export default function BlogDetail() {
                 >
                   {t('tuVanDamCuoi')}
                 </Link>
-                <Link
-                  href="/blog?category=cuoi-truyen"
-                  className={`block px-4 py-2 rounded-lg transition-colors ${blog.category === 'cuoi-truyen'
-                    ? 'bg-[#cbb9a4] text-white font-medium'
-                    : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                >
-                  {t('cuoiTruyen')}
-                </Link>
-                <Link
-                  href="/blog?category=dich-vu-khac"
-                  className={`block px-4 py-2 rounded-lg transition-colors ${blog.category === 'dich-vu-khac'
-                    ? 'bg-[#cbb9a4] text-white font-medium'
-                    : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                >
-                  {t('dichVuKhac')}
-                </Link>
               </nav>
             </div>
           </aside>
