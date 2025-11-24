@@ -49,7 +49,7 @@ export default function BlogList() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
           <aside className="lg:w-64 shrink-0">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-24 w-[325px]">
               <h3 className="text-lg font-bold text-gray-800 mb-4 pb-3 border-b border-gray-200">
                 {t('categories')}
               </h3>

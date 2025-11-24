@@ -166,7 +166,7 @@ export default function EditBlog() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Category *</label>
                   <select
                     required
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 bg-white"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-700 bg-white whitespace-nowrap"
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   >
