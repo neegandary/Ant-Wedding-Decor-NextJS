@@ -4,7 +4,7 @@ import React from 'react';
 import { useBlogEditorStore } from '@/lib/blog-editor/store';
 import { cn } from '@/lib/blog-editor/utils';
 
-export function ButtonBlock({ id, text = 'Button', href = '#', backgroundColor = '', padding = '' }) {
+export function ButtonBlock({ id, text = 'Button', href = '/contact', backgroundColor = '', padding = '' }) {
   const updateBlock = useBlogEditorStore((s) => s.updateBlock);
 
   return (

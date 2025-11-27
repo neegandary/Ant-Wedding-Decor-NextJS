@@ -6,9 +6,11 @@ import Blog from '@/lib/models/Blog';
 export async function GET(request, { params }) {
   try {
     await connectDB();
+    
+    const { slug } = await params;
 
     const blog = await Blog.findOne({ 
-      slug: params.slug,
+      slug: slug,
       status: 'published'
     }).lean();
 

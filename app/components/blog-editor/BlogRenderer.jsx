@@ -58,7 +58,7 @@ const RenderBlock = ({ block }) => {
       return (
         <div 
           className={cn(
-            "prose prose-p:text-inherit max-w-none",
+            "prose prose-p:text-inherit prose-p:leading-normal prose-p:my-0 max-w-none",
             wrapperClasses
           )} 
           dangerouslySetInnerHTML={{ __html: props.content || '' }} 
@@ -81,16 +81,15 @@ const RenderBlock = ({ block }) => {
 
     case 'Button':
       return (
-        <div className={wrapperClasses}>
-          <Button asChild size="lg" style={{ backgroundColor: props.backgroundColor }}>
-            <a 
-              href={props.href || '#'} 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              {props.text || 'Button'}
-            </a>
-          </Button>
+        <div className={cn("flex justify-center", wrapperClasses)}>
+          <a
+            href={props.href || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-lg bg-teal-700 px-6 py-3 text-white font-medium hover:bg-teal-800 transition-colors"
+          >
+            {props.text || 'Button'}
+          </a>
         </div>
       );
 
@@ -99,7 +98,7 @@ const RenderBlock = ({ block }) => {
         <div className={cn("flex flex-col md:flex-row items-center gap-8 my-6", wrapperClasses)}>
           <div className="md:w-1/2">
             <div 
-              className="prose prose-p:text-inherit max-w-none" 
+              className="prose prose-p:text-inherit prose-p:leading-normal prose-p:my-0 max-w-none" 
               dangerouslySetInnerHTML={{ __html: props.content || '' }} 
             />
           </div>
@@ -130,7 +129,7 @@ const RenderBlock = ({ block }) => {
           </div>
           <div className="md:w-1/2">
             <div 
-              className="prose prose-p:text-inherit max-w-none" 
+              className="prose prose-p:text-inherit prose-p:leading-normal prose-p:my-0 max-w-none" 
               dangerouslySetInnerHTML={{ __html: props.content || '' }} 
             />
           </div>

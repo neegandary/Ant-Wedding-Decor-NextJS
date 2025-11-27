@@ -3,12 +3,14 @@
 import { useSession } from 'next-auth/react';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 
 const BlogPageBuilder = dynamic(() => import('@/app/components/blog-editor/BlogPageBuilder').then(mod => ({ default: mod.BlogPageBuilder })), { ssr: false });
 const Toast = dynamic(() => import('@/app/components/Toast'), { ssr: false });
 
 export default function EditBlogContent() {
+  const { t } = useTranslation();
   const { data: session, status } = useSession();
   const router = useRouter();
   const params = useParams();
@@ -37,10 +39,26 @@ export default function EditBlogContent() {
       
       if (!res.ok) throw new Error(data.error);
       
+      // Support both old format (contentBlocks) and new format (content.vi/en)
+      let contentBlocksVi = [];
+      let contentBlocksEn = [];
+      
+      // Check if content is an object with vi/en
+      if (data.blog.content && typeof data.blog.content === 'object' && !Array.isArray(data.blog.content)) {
+        contentBlocksVi = data.blog.content.vi?.blocks || [];
+        contentBlocksEn = data.blog.content.en?.blocks || [];
+      } 
+      // Fallback to old format
+      else {
+        contentBlocksVi = data.blog.contentBlocks || [];
+        contentBlocksEn = [];
+      }
+      
       setFormData({
         ...data.blog,
-        contentBlocks: data.blog.contentBlocks || [],
-        contentVersion: data.blog.contentVersion || 'blocks',
+        contentBlocksVi,
+        contentBlocksEn,
+        contentVersion: 'blocks',
       });
     } catch (err) {
       console.error('Fetch blog error:', err);
@@ -50,13 +68,16 @@ export default function EditBlogContent() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, allBlocks) => {
     e.preventDefault();
     setSaving(true);
 
     try {
       const payload = {
-        contentBlocks: formData.contentBlocks,
+        content: {
+          vi: { blocks: allBlocks.vi },
+          en: { blocks: allBlocks.en }
+        },
         contentVersion: 'blocks',
       };
 
@@ -69,10 +90,10 @@ export default function EditBlogContent() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Có lỗi xảy ra');
+        throw new Error(data.error || t('updateError'));
       }
 
-      setToast({ message: 'Cập nhật nội dung thành công!', type: 'success' });
+      setToast({ message: t('updateSuccess'), type: 'success' });
     } catch (err) {
       console.error('Save error:', err);
       setToast({ message: err.message, type: 'error' });
@@ -86,7 +107,7 @@ export default function EditBlogContent() {
   }, []);
 
   if (status === 'loading' || loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center">{t('loading')}</div>;
   }
 
   if (!session || !formData) return null;
@@ -95,10 +116,11 @@ export default function EditBlogContent() {
     <>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <BlogPageBuilder
-        initialBlocks={formData.contentBlocks || []}
+        initialBlocks={formData.contentBlocksVi || []}
+        initialBlocksEn={formData.contentBlocksEn || []}
         onChange={handleBlocksChange}
         onPublish={handleSubmit}
-        publishLabel="Cập nhật nội dung"
+        publishLabel={t('updateContent')}
         isPublishing={saving}
         slug={formData.slug}
         backUrl={`/admin/blogs/${params.id}/edit`}

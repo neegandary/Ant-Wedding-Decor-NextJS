@@ -46,10 +46,10 @@ export default function BlogList() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Sidebar & Content Layout */}
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           {/* Sidebar */}
-          <aside className="lg:w-64 shrink-0">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-24 w-[325px]">
+          <aside className="w-full lg:w-84 shrink-0">
+            <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
               <h3 className="text-lg font-bold text-gray-800 mb-4 pb-3 border-b border-gray-200">
                 {t('categories')}
               </h3>

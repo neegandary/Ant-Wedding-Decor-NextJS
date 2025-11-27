@@ -80,7 +80,7 @@ export default function BlogDetail() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
-          <aside className="lg:w-64 shrink-0">
+          <aside className="lg:w-84 shrink-0">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
               <h3 className="text-lg font-bold text-gray-800 mb-4 pb-3 border-b border-gray-200">
                 {t('categories')}
@@ -170,16 +170,39 @@ export default function BlogDetail() {
               </div>
 
               {/* Content - Support both HTML and Blocks */}
-              {blog.contentVersion === 'blocks' && blog.contentBlocks && blog.contentBlocks.length > 0 ? (
-                <div className="mb-8">
-                  <BlogRenderer blocks={blog.contentBlocks} />
-                </div>
-              ) : (
-                <div
-                  className="blog-content mb-8"
-                  dangerouslySetInnerHTML={{ __html: typeof blog.content === 'object' ? blog.content[i18n.language] || blog.content.vi : blog.content }}
-                />
-              )}
+              {(() => {
+                // Get blocks based on current language
+                let blocks = [];
+                
+                if (blog.contentVersion === 'blocks') {
+                  // New format: content.vi.blocks / content.en.blocks
+                  if (blog.content && typeof blog.content === 'object' && !Array.isArray(blog.content) && (blog.content.vi || blog.content.en)) {
+                    const currentLang = i18n.language || 'vi';
+                    blocks = blog.content[currentLang]?.blocks || blog.content.vi?.blocks || [];
+                  }
+                  // Old format: contentBlocks (ALWAYS check this as fallback)
+                  if (blocks.length === 0 && blog.contentBlocks && blog.contentBlocks.length > 0) {
+                    blocks = blog.contentBlocks;
+                  }
+                }
+                
+                // If blocks exist and not empty, render with BlogRenderer
+                if (blocks.length > 0) {
+                  return (
+                    <div className="mb-8">
+                      <BlogRenderer blocks={blocks} />
+                    </div>
+                  );
+                }
+                
+                // Otherwise fallback to HTML content
+                return (
+                  <div
+                    className="blog-content mb-8"
+                    dangerouslySetInnerHTML={{ __html: typeof blog.content === 'object' ? blog.content[i18n.language] || blog.content.vi : blog.content }}
+                  />
+                );
+              })()}
 
               {/* Tags */}
               {blog.tags && blog.tags.length > 0 && (

@@ -20,7 +20,7 @@ import { Undo2, Redo2, Save } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-export function BlogPageBuilder({ initialBlocks = [], onChange, onPublish, publishLabel = 'Publish', isPublishing = false, slug = 'blog', backUrl = null }) {
+export function BlogPageBuilder({ initialBlocks = [], initialBlocksEn = [], onChange, onPublish, publishLabel = 'Publish', isPublishing = false, slug = 'blog', backUrl = null }) {
   const blocks = useBlogEditorStore((s) => s.blocks);
   const setBlocks = useBlogEditorStore((s) => s.setBlocks);
   const addBlock = useBlogEditorStore((s) => s.addBlock);
@@ -31,6 +31,10 @@ export function BlogPageBuilder({ initialBlocks = [], onChange, onPublish, publi
   const canRedo = useBlogEditorStore((s) => s.canRedo);
   const setSelectedBlockId = useBlogEditorStore((s) => s.setSelectedBlockId);
   const setOnBlocksChange = useBlogEditorStore((s) => s.setOnBlocksChange);
+  const currentLanguage = useBlogEditorStore((s) => s.currentLanguage);
+  const setCurrentLanguage = useBlogEditorStore((s) => s.setCurrentLanguage);
+  const setBlocksByLanguage = useBlogEditorStore((s) => s.setBlocksByLanguage);
+  const getAllBlocks = useBlogEditorStore((s) => s.getAllBlocks);
 
   const [dropTargetId, setDropTargetId] = useState(null);
   const [dropPosition, setDropPosition] = useState(null);
@@ -46,19 +50,23 @@ export function BlogPageBuilder({ initialBlocks = [], onChange, onPublish, publi
 
   const handlePublish = (e) => {
     if (onPublish) {
+      // Get all blocks for both languages
+      const allBlocks = getAllBlocks();
       // Create a synthetic event if needed
       const syntheticEvent = e || { preventDefault: () => {} };
-      onPublish(syntheticEvent);
+      onPublish(syntheticEvent, allBlocks);
     }
   };
 
   // Initialize blocks only once
   useEffect(() => {
-    if (!initialized && initialBlocks && initialBlocks.length > 0) {
-      setBlocks(initialBlocks);
+    if (!initialized) {
+      const blocksVi = initialBlocks && initialBlocks.length > 0 ? initialBlocks : [];
+      const blocksEn = initialBlocksEn && initialBlocksEn.length > 0 ? initialBlocksEn : [];
+      setBlocksByLanguage(blocksVi, blocksEn);
       setInitialized(true);
     }
-  }, [initialBlocks, initialized, setBlocks]);
+  }, [initialBlocks, initialBlocksEn, initialized, setBlocksByLanguage]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -149,6 +157,33 @@ export function BlogPageBuilder({ initialBlocks = [], onChange, onPublish, publi
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Language Selector */}
+          <div className="flex items-center gap-1 bg-muted rounded-md p-1">
+            <button
+              onClick={() => setCurrentLanguage('vi')}
+              className={cn(
+                "px-3 py-1 text-sm font-medium rounded transition-colors",
+                currentLanguage === 'vi' 
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              🇻🇳 VI
+            </button>
+            <button
+              onClick={() => setCurrentLanguage('en')}
+              className={cn(
+                "px-3 py-1 text-sm font-medium rounded transition-colors",
+                currentLanguage === 'en' 
+                  ? "bg-background text-foreground shadow-sm" 
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              🇬🇧 EN
+            </button>
+          </div>
+
+          <div className="h-6 w-px bg-border" />
 
           {/* Undo/Redo */}
           <Button

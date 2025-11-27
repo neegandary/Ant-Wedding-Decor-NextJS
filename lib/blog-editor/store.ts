@@ -39,6 +39,9 @@ const initialState = {
   historyIndex: -1,
   isDirty: false,
   onBlocksChange: null as ((blocks: EditorBlock[]) => void) | null,
+  currentLanguage: 'vi' as 'vi' | 'en',
+  blocksVi: [] as EditorBlock[],
+  blocksEn: [] as EditorBlock[],
 };
 
 type EditorState = typeof initialState;
@@ -58,6 +61,9 @@ type EditorActions = {
   reset: () => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
+  setCurrentLanguage: (lang: 'vi' | 'en') => void;
+  setBlocksByLanguage: (blocksVi: EditorBlock[], blocksEn: EditorBlock[]) => void;
+  getAllBlocks: () => { vi: EditorBlock[]; en: EditorBlock[] };
 };
 
 export const useBlogEditorStore = create<EditorState & EditorActions>()(
@@ -202,6 +208,44 @@ export const useBlogEditorStore = create<EditorState & EditorActions>()(
 
       canUndo: () => get().historyIndex > 0,
       canRedo: () => get().historyIndex < get().history.length - 1,
+
+      setCurrentLanguage: (lang) => {
+        set((state) => {
+          // Save current blocks to current language
+          if (state.currentLanguage === 'vi') {
+            state.blocksVi = JSON.parse(JSON.stringify(state.blocks));
+          } else {
+            state.blocksEn = JSON.parse(JSON.stringify(state.blocks));
+          }
+          
+          // Switch to new language
+          state.currentLanguage = lang;
+          state.blocks = JSON.parse(JSON.stringify(lang === 'vi' ? state.blocksVi : state.blocksEn));
+          state.history = [JSON.parse(JSON.stringify(state.blocks))];
+          state.historyIndex = 0;
+          state.selectedBlockId = null;
+        });
+      },
+
+      setBlocksByLanguage: (blocksVi, blocksEn) => {
+        set((state) => {
+          state.blocksVi = blocksVi;
+          state.blocksEn = blocksEn;
+          state.blocks = state.currentLanguage === 'vi' ? blocksVi : blocksEn;
+          state.history = [JSON.parse(JSON.stringify(state.blocks))];
+          state.historyIndex = 0;
+        });
+      },
+
+      getAllBlocks: () => {
+        const state = get();
+        // Save current editing blocks
+        const currentBlocks = JSON.parse(JSON.stringify(state.blocks));
+        return {
+          vi: state.currentLanguage === 'vi' ? currentBlocks : state.blocksVi,
+          en: state.currentLanguage === 'en' ? currentBlocks : state.blocksEn,
+        };
+      },
     };
   })
 );

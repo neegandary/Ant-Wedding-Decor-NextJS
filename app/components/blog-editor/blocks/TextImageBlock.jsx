@@ -55,7 +55,7 @@ export function TextImageBlock({ id, content = '<p>Type your content here...</p>
     content: content,
     editorProps: {
       attributes: {
-        class: 'prose dark:prose-invert max-w-none focus:outline-none',
+        class: 'prose dark:prose-invert max-w-none focus:outline-none prose-p:leading-normal prose-p:my-0',
       },
     },
     onUpdate: ({ editor: currentEditor }) => {
