@@ -119,6 +119,15 @@ export default function BlogDetail() {
                 >
                   {t('tuVanDamCuoi')}
                 </Link>
+                <Link
+                  href="/blog?category=chuyen-nghe"
+                  className={`block px-4 py-2 rounded-lg transition-colors ${blog.category === 'chuyen-nghe'
+                    ? 'bg-[#cbb9a4] text-white font-medium'
+                    : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                >
+                  {t('chuyenNghe')}
+                </Link>
               </nav>
             </div>
           </aside>

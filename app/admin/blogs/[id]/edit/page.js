@@ -173,6 +173,7 @@ export default function EditBlog() {
                     <option value="cam-nang-cuoi">Cẩm Nang Cưới</option>
                     <option value="dam-cuoi-truyen-thong">Đám Cưới Truyền Thống</option>
                     <option value="tiec-cuoi-ngoai-troi">Tiệc Cưới Ngoài Trời</option>
+                    <option value="chuyen-nghe">Chuyên Nghề</option>
                   </select>
                 </div>
               </div>

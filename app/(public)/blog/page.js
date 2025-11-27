@@ -90,6 +90,15 @@ export default function BlogList() {
                 >
                   {t('tuVanDamCuoi')}
                 </button>
+                <button
+                  onClick={() => setFilter('chuyen-nghe')}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${filter === 'chuyen-nghe'
+                    ? 'bg-[#cbb9a4] text-white font-medium'
+                    : 'text-gray-700 hover:bg-gray-100'
+                    }`}
+                >
+                  {t('chuyenNghe')}
+                </button>
               </nav>
             </div>
           </aside>

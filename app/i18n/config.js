@@ -6,7 +6,7 @@ const resources = {
     translation: {
       // Language
       currentLang: "vi",
-      
+
       // Header
       hotline: "Hotline",
 
@@ -19,11 +19,12 @@ const resources = {
       contact: "LIÊN HỆ",
 
       // Blog Categories
-      allCategories: "Tất cả",
+      allCategories: "Tất Cả",
       camNang: "Cẩm Nang Cưới",
       realLifeWedding: "Đám Cưới Truyền Thống",
       tuVanDamCuoi: "Tiệc Cưới Ngoài Trời",
-      
+      chuyenNghe: "Chuyện Nghề",
+
       // Blog Actions
       readMore: "Đọc thêm",
       backToBlogList: "Quay lại danh sách blog",
@@ -406,7 +407,7 @@ const resources = {
     translation: {
       // Language
       currentLang: "en",
-      
+
       // Header
       hotline: "Hotline",
 
@@ -423,7 +424,8 @@ const resources = {
       camNang: "Wedding Hanbook",
       realLifeWedding: "Vietnamese Traditional Wedding",
       tuVanDamCuoi: "Destination Wedding",
-      
+      chuyenNghe: "Tales From The Trade",
+
       // Blog Actions
       readMore: "Read more",
       backToBlogList: "Back to blog list",
