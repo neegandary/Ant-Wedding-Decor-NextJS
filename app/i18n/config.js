@@ -456,7 +456,7 @@ const resources = {
 
       // Blog Categories
       allCategories: "All",
-      camNang: "Wedding Hanbook",
+      camNang: "Wedding Handbook",
       realLifeWedding: "Vietnamese Traditional Wedding",
       tuVanDamCuoi: "Destination Wedding",
       chuyenNghe: "Tales From The Trade",
