@@ -39,7 +39,7 @@ const resources = {
 
       // Hero
       wedding: "Tiệc cưới",
-      heroTitle: "Thoả Sức Biến Tấu Tiệc Cưới Trong Mơ",
+      heroTitle1: "Thoả Sức Biến Tấu Tiệc Cưới Trong Mơ",
       readMore: "Xem thêm",
 
       // Service Cards

@@ -167,7 +167,7 @@ const Hero = () => {
                             textShadow: '0 4px 20px rgba(0,0,0,0.6), 0 2px 10px rgba(0,0,0,0.4)'
                         }}
                     >
-                        {t('heroTitle')}
+                        {t('heroTitle1')}
                     </motion.h1>
 
                     {/* CTA Button - nhỏ gọn hơn trên mobile */}
