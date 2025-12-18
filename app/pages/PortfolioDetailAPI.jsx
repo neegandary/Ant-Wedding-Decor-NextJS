@@ -34,7 +34,7 @@ const PortfolioDetailAPI = ({ params }) => {
 
     // Check if screen is desktop (lg breakpoint = 1024px)
     const isDesktop = () => window.innerWidth >= 1024;
-    
+
     // Only apply sticky on desktop
     if (!isDesktop()) return;
 
@@ -58,14 +58,14 @@ const PortfolioDetailAPI = ({ params }) => {
 
       const scrollY = window.scrollY;
       const sidebarHeight = stickyEl.offsetHeight;
-      
+
       const containerRect = container.getBoundingClientRect();
       const containerTop = containerRect.top + scrollY;
       const containerBottom = containerTop + container.offsetHeight;
-      
+
       const startSticky = containerTop - stickyOffset;
       const stopSticky = containerBottom - sidebarHeight - stickyOffset;
-      
+
       if (scrollY >= startSticky && scrollY < stopSticky) {
         placeholder.style.display = 'block';
         placeholder.style.height = `${sidebarHeight}px`;
@@ -103,7 +103,7 @@ const PortfolioDetailAPI = ({ params }) => {
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     handleScroll();
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
@@ -194,7 +194,7 @@ const PortfolioDetailAPI = ({ params }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12 relative">
           {/* Left Column - Info (Sticky via JS) */}
-          <aside 
+          <aside
             data-sticky-sidebar
             className="lg:col-span-1 bg-white rounded-lg shadow-md p-5 sm:p-6 lg:p-8"
           >
