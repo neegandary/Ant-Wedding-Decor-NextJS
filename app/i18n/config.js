@@ -43,14 +43,14 @@ const resources = {
       readMore: "Xem thêm",
 
       // Service Cards
-      ancestorDecor: "TRANG TRÍ LỄ GIA TIÊN",
+      ancestorDecor: "TRANG TRÍ\n LỄ GIA TIÊN",
       ancestorDesc: "Lễ gia tiên – nơi Ant kết hợp nét truyền thống Việt cùng tinh thần hiện đại theo mong muốn của từng cặp đôi. Nhưng luôn trọn vẹn ý nghĩa và tinh thần phong tục Việt Nam – nơi cảm xúc và sự trang trọng hòa làm một.",
-      outdoorDecor: "TRANG TRÍ NGOÀI TRỜI",
+      outdoorDecor: "TRANG TRÍ\n NGOÀI TRỜI",
       outdoorDesc: "Cùng dâu rể, ANT tạo nên những không gian tiệc cưới ngoài trời đầy cảm xúc – nơi thiên nhiên làm phông nền, và mỗi đám cưới là một bức tranh kể về tình yêu theo cách riêng của hai người.",
-      restaurantDecor: "TRANG TRÍ SẢNH CƯỚI",
+      restaurantDecor: "TRANG TRÍ\n SẢNH CƯỚI",
       restaurantDesc: "Ant giúp bạn thổi hồn vào không gian sảnh cưới, biến nơi ấy thành một lễ đường riêng biệt, nơi mỗi góc nhỏ đều được chăm chút tỉ mỉ để phản chiếu phong cách và cảm xúc của hai bạn.",
       restaurantDesc1: "Biến đổi không gian sảnh cưới vốn có thành lễ đường của riêng bạn",
-      eventDecorTitle: "TRANG TRÍ SỰ KIỆN",
+      eventDecorTitle: "TRANG TRÍ\n SỰ KIỆN",
       eventDecorDesc: "Từ những buổi tiệc nhỏ đầy yêu thương đến những sự kiện trọng đại trong đời, ANT hân hoan khi được đồng hành cùng bạn, góp phần tạo nên những khoảnh khắc thật đẹp và ý nghĩa.",
       viewDetails: "XEM CHI TIẾT",
 
