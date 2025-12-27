@@ -116,6 +116,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="vi">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://pub-4c5c0327c6a04522b8c7d0f0b2b6c3e8.r2.dev" />
         <link rel="dns-prefetch" href="https://pub-4c5c0327c6a04522b8c7d0f0b2b6c3e8.r2.dev" />
         <script
